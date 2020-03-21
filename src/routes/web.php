@@ -13,22 +13,25 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Auth::routes();
+
 Route::get('/', function () {
     return redirect('/samples');
 });
 
-Route::prefix('samples')->group(function () {
-    Route::get('/', 'SamplesController@index');
-    Route::get('/new', 'SamplesController@create');
-    Route::post('/', 'UsersController@store');
-    Route::get('/{id}/edit', 'SamplesController@edit');
-    Route::post('/{id}', 'UsersController@update');
+Route::middleware('auth')->group(function () {
+    Route::prefix('samples')->group(function () {
+        Route::get('/', 'SamplesController@index');
+        Route::get('/new', 'SamplesController@create');
+        Route::post('/', 'UsersController@store');
+        Route::get('/{id}/edit', 'SamplesController@edit');
+        Route::post('/{id}', 'UsersController@update');
+    });
+
+    Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout');
+
+    Route::get('/{any}', function () {
+        return abort(404);
+    })->where('any', '.*');
 });
-
-Auth::routes();
-
-Route::get('/{any}', function () {
-    // TODO (fgic): Make 404 Page
-    return abort(404);
-})->where('any', '.*');
 

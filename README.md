@@ -34,13 +34,16 @@ a font ikoniek [Font Awesome 5](https://fontawesome.com/).
 
 ## Inštalácia
 __Požiadavky__:
-- PHP 7+
-- Node.js & NPM - Na build frontend častí (transpilácia SASS do CSS)
+- [PHP 7+](https://www.php.net/downloads)
+- [Node.js](https://nodejs.org/en/) & [NPM](https://www.npmjs.com/) - Na build frontend častí (transpilácia SASS do CSS)
 - MySQL 5.7
+- [Composer](https://getcomposer.org/) - PHP dependency manager
 
 ```bash
 git clone https://github.com/FIIT-DBS2020/project-gic_souc/
 cd project-gic_souc/src
+composer install
+npm install
 ```
 
 Po nahodení databázy a importovaní dát dostupných v `db/db_dump.sql` spustiť server pomocou:

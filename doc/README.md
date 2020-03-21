@@ -37,10 +37,13 @@ __Požiadavky__:
 - PHP 7+
 - Node.js & NPM - Na build frontend častí (transpilácia SASS do CSS)
 - MySQL 5.7
+- Composer - PHP dependency manager
 
 ```bash
 git clone https://github.com/FIIT-DBS2020/project-gic_souc/
 cd project-gic_souc/src
+composer install
+npm install
 ```
 
 Po nahodení databázy a importovaní dát dostupných v `db/db_dump.sql` spustiť server pomocou:

@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('script')
+    @yield('script')
+@endsection
+
 @section('master')
     <div class="h-screen bg-white flex">
         <x-alert></x-alert>

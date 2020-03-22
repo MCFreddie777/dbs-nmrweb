@@ -53,7 +53,7 @@
             class="logo flex justify-center bg-yellow-500 h-16"
         >
             <img
-                src="img/logo.svg"
+                src="{{ asset('img/logo.svg') }}"
                 alt=""
                 class="h-full w-full py-4"
             >

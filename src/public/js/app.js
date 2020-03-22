@@ -29872,13 +29872,13 @@ module.exports = function(module) {
 		});
 		Object.defineProperty(module, "id", {
 			enumerable: true,
-			get: function() {
-				return module.i;
-			}
-		});
-		module.webpackPolyfill = 1;
-	}
-	return module;
+            get: function () {
+                return module.i;
+            }
+        });
+        module.webpackPolyfill = 1;
+    }
+    return module;
 };
 
 
@@ -29892,19 +29892,28 @@ module.exports = function(module) {
         /*! no static exports found */
         /***/ (function (module, exports, __webpack_require__) {
 
-            __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js"); // Remove alert after clicking close
+            __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
+
+            $(window).on('load', function () {
+                // Remove alert after clicking close
+                var alert = document.querySelector('#alert');
+                var closeBtn = document.querySelector('.close-btn');
+
+                if (closeBtn) {
+                    closeBtn.addEventListener('click', function () {
+                        setTimeout(function () {
+                            alert.remove();
+                        }, 250);
+                    });
+                } // JSApplet for chemical structures
 
 
-            var alert = document.querySelector('#alert');
-            var closeBtn = document.querySelector('.close-btn');
-
-            if (closeBtn) {
-                closeBtn.addEventListener('click', function () {
-                    setTimeout(function () {
-                        alert.remove();
-                    }, 250);
-                });
-            }
+                setTimeout(function () {
+                    window.jsmeApplet = new JSApplet.JSME("jsme", {
+                        options: "newlook"
+                    });
+                }, 750);
+            });
 
             /***/
         }),
@@ -29925,16 +29934,17 @@ module.exports = function(module) {
 
             try {
                 window.$ = window.jQuery = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
-} catch (e) {}
-/**
- * We'll load the axios HTTP library which allows us to easily issue requests
- * to our Laravel back-end. This library automatically handles sending the
- * CSRF token as a header based on the value of the "XSRF" token cookie.
- */
+            } catch (e) {
+            }
+            /**
+             * We'll load the axios HTTP library which allows us to easily issue requests
+             * to our Laravel back-end. This library automatically handles sending the
+             * CSRF token as a header based on the value of the "XSRF" token cookie.
+             */
 
 
             window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+            window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
  * for events that are broadcast by Laravel. Echo and event broadcasting
@@ -29949,14 +29959,15 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     encrypted: true
 // });
 
-            /***/ }),
+            /***/
+        }),
 
-/***/ "./resources/sass/app.scss":
-/*!*********************************!*\
-  !*** ./resources/sass/app.scss ***!
-  \*********************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+        /***/ "./resources/sass/app.scss":
+        /*!*********************************!*\
+          !*** ./resources/sass/app.scss ***!
+          \*********************************/
+        /*! no static exports found */
+        /***/ (function (module, exports) {
 
 // removed by extract-text-webpack-plugin
 

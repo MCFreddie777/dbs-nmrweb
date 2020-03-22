@@ -1,10 +1,11 @@
-@props(['type','name','wFull','labeled','errorKey'])
+@props(['type','name','wFull','labeled','errorKey','class'])
 
 
 <div
     class="px-3 pb-1 bg-gray-300 rounded
     @if( $errors->has($name) || (isset($errorKey) &&  $errors->has($errorKey))) border-2 border-red-500 @endif
     @isset($wFull) w-full @endisset
+    @isset($class) {{$class}} @endisset
     @isset($labeled) pt-8 @endisset"
 >
     <input

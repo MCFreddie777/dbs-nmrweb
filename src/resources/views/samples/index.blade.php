@@ -58,6 +58,8 @@
                     class="rounded-full"
                     text="Pridať vzorku"
                     primary
+                    type="link"
+                    :href="url()->current().'/new'"
                 >
                 </x-ui.button>
             </div>

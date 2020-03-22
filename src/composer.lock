@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5cb6e369ed424d05439b41685b0d3441",
+    "content-hash": "40cfbd88fe250d71646ad849d7d8134f",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -730,6 +730,51 @@
             ],
             "description": "Highlight PHP code in terminal",
             "time": "2018-09-29T18:48:56+00:00"
+        },
+        {
+            "name": "konradkalemba/blade-components-scoped-slots",
+            "version": "0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/konradkalemba/blade-components-scoped-slots.git",
+                "reference": "0b5061dace4e4d28ae845e133912a52485482328"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/konradkalemba/blade-components-scoped-slots/zipball/0b5061dace4e4d28ae845e133912a52485482328",
+                "reference": "0b5061dace4e4d28ae845e133912a52485482328",
+                "shasum": ""
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "KonradKalemba\\BladeComponentsScopedSlots\\BladeComponentsScopedSlotsServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "KonradKalemba\\BladeComponentsScopedSlots\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Konrad Kalemba",
+                    "email": "konrad@gotowi.dev"
+                }
+            ],
+            "description": "Scoped slots feature addition to Laravel's Blade templating engine",
+            "keywords": [
+                "blade",
+                "laravel",
+                "scoped-slots"
+            ],
+            "time": "2019-07-10T23:51:53+00:00"
         },
         {
             "name": "laravel/framework",

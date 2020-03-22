@@ -7,11 +7,12 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 
-class SamplesController extends Controller
+class SampleController extends Controller
 {
     public function index()
     {
-        return view('samples.index');
-//            ->with('samples', Sample::all());
+        $samples = Sample::all();
+        return view('samples.index')
+            ->with('samples', $samples);
     }
 }

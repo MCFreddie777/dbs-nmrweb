@@ -733,16 +733,16 @@
         },
         {
             "name": "konradkalemba/blade-components-scoped-slots",
-            "version": "0.1.0",
+            "version": "0.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/konradkalemba/blade-components-scoped-slots.git",
-                "reference": "0b5061dace4e4d28ae845e133912a52485482328"
+                "reference": "057f062c99e64ea73aa4b45066ba1af42918ddba"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/konradkalemba/blade-components-scoped-slots/zipball/0b5061dace4e4d28ae845e133912a52485482328",
-                "reference": "0b5061dace4e4d28ae845e133912a52485482328",
+                "url": "https://api.github.com/repos/konradkalemba/blade-components-scoped-slots/zipball/057f062c99e64ea73aa4b45066ba1af42918ddba",
+                "reference": "057f062c99e64ea73aa4b45066ba1af42918ddba",
                 "shasum": ""
             },
             "type": "library",
@@ -774,7 +774,7 @@
                 "laravel",
                 "scoped-slots"
             ],
-            "time": "2019-07-10T23:51:53+00:00"
+            "time": "2020-03-22T15:07:31+00:00"
         },
         {
             "name": "laravel/framework",

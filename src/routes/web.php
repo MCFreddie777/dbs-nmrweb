@@ -13,7 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Auth::routes();
+Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
+Route::post('login', 'Auth\LoginController@login');
 
 Route::get('/', function () {
     return redirect('/samples');
@@ -37,8 +38,8 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::prefix('change-password')->group(function () {
-        Route::get('/', 'Auth\AuthController@change');
-        Route::post('/', 'Auth\AuthController@store');
+        Route::get('/', 'Auth\AuthController@change')->name('pass-change');
+        Route::post('/', 'Auth\AuthController@reset');
     });
 
     Route::get('/logout', 'Auth\LoginController@logout');

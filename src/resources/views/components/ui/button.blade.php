@@ -1,4 +1,4 @@
-@props(['text','icon','class','primary','secondary'])
+@props(['text','icon','class','primary','secondary','type'])
 
 <div
     class="flex justify-center items-center
@@ -10,10 +10,20 @@
     @isset($icon)
         <i class="mr-2 {{ $icon }}"/></i>
     @endisset
-    <button
-        class="focus:outline-none"
-        style="text-align: center;"
-    >
-        {{ $text }}
-    </button>
+
+    @if(isset($type) && $type == 'submit')
+        <input
+            type="{{$type}}"
+            value="{{$text}}"
+            class="focus:outline-none bg-transparent hover:cursor-pointer"
+            style="text-align: center;"
+        />
+    @else
+        <button
+            class="focus:outline-none"
+            style="text-align: center;"
+        >
+            {{ $text }}
+        </button>
+    @endif
 </div>

@@ -44,8 +44,7 @@
                     @enderror
 
                     <div
-                        class="relative mt-16 border-2 rounded border-white
-                        @error('login') border-red-500 @enderror"
+                        class="relative mt-16 border-2 rounded border-white"
                     >
                         <label
                             for="login"
@@ -66,8 +65,7 @@
                     </div>
 
                     <div
-                        class="relative mt-3 w-100 border-2 rounded border-white
-                        @error('login') border-red-500 @enderror"
+                        class="relative mt-3 w-100 border-2 rounded border-white"
                     >
                         <label
                             for="password"
@@ -83,6 +81,7 @@
                             placeholder="*********"
                             labeled
                             w-full
+                            error-key="login"
                         >
                         </x-ui.input>
 

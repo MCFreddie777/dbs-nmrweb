@@ -29882,24 +29882,49 @@ module.exports = function(module) {
 };
 
 
-/***/ }),
+            /***/
+        }),
 
-/***/ "./resources/js/app.js":
-/*!*****************************!*\
-  !*** ./resources/js/app.js ***!
-  \*****************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+        /***/ "./resources/js/app.js":
+        /*!*****************************!*\
+          !*** ./resources/js/app.js ***!
+          \*****************************/
+        /*! no static exports found */
+        /***/ (function (module, exports, __webpack_require__) {
 
-window._ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
-/**
- * We'll load jQuery and the Bootstrap jQuery plugin which provides support
- * for JavaScript based Bootstrap features such as modals and tabs. This
- * code may be modified to fit the specific needs of your application.
- */
+            __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js"); // Remove alert after clicking close
 
-try {
-  window.$ = window.jQuery = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
+
+            var alert = document.querySelector('#alert');
+            var closeBtn = document.querySelector('.close-btn');
+
+            if (closeBtn) {
+                closeBtn.addEventListener('click', function () {
+                    setTimeout(function () {
+                        alert.remove();
+                    }, 250);
+                });
+            }
+
+            /***/
+        }),
+
+        /***/ "./resources/js/bootstrap.js":
+        /*!***********************************!*\
+          !*** ./resources/js/bootstrap.js ***!
+          \***********************************/
+        /*! no static exports found */
+        /***/ (function (module, exports, __webpack_require__) {
+
+            window._ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
+            /**
+             * We'll load jQuery and the Bootstrap jQuery plugin which provides support
+             * for JavaScript based Bootstrap features such as modals and tabs. This
+             * code may be modified to fit the specific needs of your application.
+             */
+
+            try {
+                window.$ = window.jQuery = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
 } catch (e) {}
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
@@ -29908,7 +29933,7 @@ try {
  */
 
 
-window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+            window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
@@ -29924,7 +29949,7 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     encrypted: true
 // });
 
-/***/ }),
+            /***/ }),
 
 /***/ "./resources/sass/app.scss":
 /*!*********************************!*\

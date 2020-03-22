@@ -2,6 +2,7 @@
 
 @section('master')
     <div class="h-screen bg-white flex">
+        <x-alert></x-alert>
         @include('_partials.navigation')
         <div
             class="flex flex-col flex-1 h-screen max-h-full overflow-y-auto"

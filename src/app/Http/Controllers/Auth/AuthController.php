@@ -53,8 +53,8 @@ class AuthController extends Controller
 
     protected function sendResetResponse(Request $request, $response)
     {
-        return redirect($this->redirectPath())
-            ->with('success', ['Heslo bolo úspešne zmenené.']);
+        session()->put('success', ['Heslo bolo úspešne zmenené']);
+        return redirect($this->redirectPath());
     }
 
     protected function sendResetFailedResponse(Request $request, $response)

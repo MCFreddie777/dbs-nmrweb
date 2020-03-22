@@ -9,16 +9,6 @@
                 Zmena hesla
             </h1>
 
-            @if ($errors->any())
-                <div class="alert alert-danger">
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
-
             <form action="#" method="POST">
                 @csrf
 
@@ -52,7 +42,6 @@
                         :required="true"
                         placeholder="••••••••"
                         autocomplete="off"
-                        value="Nbusr123"
                     ></x-ui.input>
                 </div>
 
@@ -69,7 +58,6 @@
                         :required="true"
                         placeholder="••••••••"
                         autocomplete="off"
-                        value="Nbusr123"
                         error-key="password"
                     ></x-ui.input>
                 </div>

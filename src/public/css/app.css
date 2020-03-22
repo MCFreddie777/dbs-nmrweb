@@ -22116,13 +22116,13 @@ readers do not read off random characters that represent icons */
  */
 
 @font-face {
-  font-family: "Font Awesome 5 Brands";
+    font-family: "Font Awesome 5 Brands";
 
-  font-style: normal;
+    font-style: normal;
 
-  font-weight: normal;
+    font-weight: normal;
 
-  font-display: auto;
+    font-display: auto;
 
     src: url("../webfonts/fa-brands-400.eot");
 
@@ -22133,7 +22133,7 @@ readers do not read off random characters that represent icons */
     font-family: "Font Awesome 5 Brands";
 }
 
-.searchbar > input::-webkit-search-cancel-button {
+.searchbar input::-webkit-search-cancel-button {
     -webkit-appearance: none;
 }
 
@@ -22146,16 +22146,16 @@ readers do not read off random characters that represent icons */
         margin: -1px;
         overflow: hidden;
         clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border-width: 0;
-  }
+        white-space: nowrap;
+        border-width: 0;
+    }
 
-  .sm\:not-sr-only{
-    position: static;
-    width: auto;
-    height: auto;
-    padding: 0;
-    margin: 0;
+    .sm\:not-sr-only {
+        position: static;
+        width: auto;
+        height: auto;
+        padding: 0;
+        margin: 0;
     overflow: visible;
     clip: auto;
     white-space: normal;

@@ -14,7 +14,7 @@
         >
             <x-user.circle
                 :name="Auth::user()->login"
-            />
+            ></x-user.circle>
             <span class="pl-3 text-gray-900">
                 {{  Auth::user()->login }}
             </span>

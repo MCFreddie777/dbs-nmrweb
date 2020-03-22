@@ -8,11 +8,13 @@
         class="bg-gray-300 focus:outline-none block w-full p-2 hover:cursor-pointer"
         style="-moz-appearance: none;-webkit-appearance: none;appearance: none;"
         name="{{$name}}"
+        {{$attributes}}
     >
-        <option value="0" disabled selected>Vyberte možnosť...</option>
+        <option value="" hidden disabled @if(!old($name)) selected @endif>Vyberte možnosť...</option>
         @foreach($items as $item)
             <option
                 value="{{$item->id}}"
+                @if(old($name) == $item->id) selected @endif
             >
                 {{  $item->name }}
             </option>

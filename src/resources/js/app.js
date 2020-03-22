@@ -2,7 +2,6 @@ require('./bootstrap');
 
 
 $(window).on('load', function () {
-
     // Remove alert after clicking close
     const alert = document.querySelector('#alert');
     const closeBtn = document.querySelector('.close-btn');
@@ -14,11 +13,4 @@ $(window).on('load', function () {
             }, 250);
         });
     }
-
-    // JSApplet for chemical structures
-    setTimeout(function () {
-        window.jsmeApplet = new JSApplet.JSME("jsme", {
-            options: "newlook"
-        });
-    }, 750);
 });

@@ -27,7 +27,6 @@
 </div>
 
 @yield('script')
-<script src="{{ asset('js/ext/jsme.nocache.js') }}"></script>
 <script defer src="{{ asset('js/app.js') }}"></script>
 </body>
 </html>

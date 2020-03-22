@@ -2,14 +2,31 @@
 
 @section('title','Nová vzorka')
 
-
 @section('script')
+    <script src="{{ asset('js/ext/jsme.nocache.js') }}"></script>
+    <script defer>
+        // JSApplet for chemical structures
+        setTimeout(function () {
+            window.jsmeApplet = new JSApplet.JSME("jsme", {
+                options: "newlook"
+            });
+        }, 750);
+
+        // read applet into hidden textarea before submit
+        const sampleForm = document.querySelector('#sampleForm');
+        sampleForm.addEventListener("submit", (event) => {
+            event.preventDefault();
+            const data = window.jsmeApplet.molFile();
+            document.querySelector('textarea[name="structure"]').value = data;
+            sampleForm.submit();
+        });
+    </script>
 @endsection
 
 @section('content')
     <div class="bg-white rounded-lg">
         <div class="p-4 pl-6">
-            <form action="/samples" method="POST">
+            <form action="/samples" method="POST" id="sampleForm">
                 @csrf
 
                 <input
@@ -42,6 +59,7 @@
                     for="structure"
                     class="h-64 w-full"
                 >
+                    <textarea name="structure" hidden></textarea>
                     <div class="w-4/5">
                         <div id="jsme" class="flex w-full h-full justify-center mx-auto"></div>
                     </div>
@@ -57,6 +75,7 @@
                         name="spectrometer"
                         :items="$spectrometers"
                         class="text-gray-700 w-1/4"
+                        required
                     ></x-ui.select>
                 </x-ui.label>
 
@@ -70,6 +89,7 @@
                         name="solvent"
                         :items="$solvents"
                         class="text-gray-700 w-1/4"
+                        required
                     ></x-ui.select>
                 </x-ui.label>
 
@@ -84,6 +104,8 @@
                         :items="$grants"
                         class="text-gray-700 w-1/4"
                     ></x-ui.select>
+                    <span
+                        class="ml-3 text-gray-500 text-sm">(v prípade že ste samoplatca, túto možnosť nevyberajte)</span>
                 </x-ui.label>
 
                 {{-- poznamka --}}
@@ -95,7 +117,6 @@
                         name="note"
                         class="text-gray-700 w-2/3 bg-gray-300 p-2 rounded focus:outline-none placeholder-gray-500"
                         rows="4"
-                        required
                     >{{ old('note') }}</textarea>
                 </x-ui.label>
 

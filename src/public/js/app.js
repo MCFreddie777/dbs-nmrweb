@@ -29862,16 +29862,16 @@ module.exports = function(module) {
 	if (!module.webpackPolyfill) {
 		module.deprecate = function() {};
 		module.paths = [];
-		// module.parent = undefined by default
-		if (!module.children) module.children = [];
-		Object.defineProperty(module, "loaded", {
-			enumerable: true,
-			get: function() {
-				return module.l;
-			}
-		});
-		Object.defineProperty(module, "id", {
-			enumerable: true,
+        // module.parent = undefined by default
+        if (!module.children) module.children = [];
+        Object.defineProperty(module, "loaded", {
+            enumerable: true,
+            get: function () {
+                return module.l;
+            }
+        });
+        Object.defineProperty(module, "id", {
+            enumerable: true,
             get: function () {
                 return module.i;
             }
@@ -29905,14 +29905,7 @@ module.exports = function(module) {
                             alert.remove();
                         }, 250);
                     });
-                } // JSApplet for chemical structures
-
-
-                setTimeout(function () {
-                    window.jsmeApplet = new JSApplet.JSME("jsme", {
-                        options: "newlook"
-                    });
-                }, 750);
+                }
             });
 
             /***/
@@ -29945,11 +29938,11 @@ module.exports = function(module) {
 
             window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
             window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-/**
- * Echo exposes an expressive API for subscribing to channels and listening
- * for events that are broadcast by Laravel. Echo and event broadcasting
- * allows your team to easily build robust real-time web applications.
- */
+            /**
+             * Echo exposes an expressive API for subscribing to channels and listening
+             * for events that are broadcast by Laravel. Echo and event broadcasting
+             * allows your team to easily build robust real-time web applications.
+             */
 // import Echo from 'laravel-echo';
 // window.Pusher = require('pusher-js');
 // window.Echo = new Echo({
@@ -29971,13 +29964,14 @@ module.exports = function(module) {
 
 // removed by extract-text-webpack-plugin
 
-/***/ }),
+            /***/
+        }),
 
-/***/ 0:
-/*!*************************************************************!*\
-  !*** multi ./resources/js/app.js ./resources/sass/app.scss ***!
-  \*************************************************************/
-/*! no static exports found */
+        /***/ 0:
+        /*!*************************************************************!*\
+          !*** multi ./resources/js/app.js ./resources/sass/app.scss ***!
+          \*************************************************************/
+        /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(/*! /Users/feri/Library/Mobile Documents/com~apple~CloudDocs/STU/1.Ing/LS/DBS/Projekt/nmrweb/src/resources/js/app.js */"./resources/js/app.js");

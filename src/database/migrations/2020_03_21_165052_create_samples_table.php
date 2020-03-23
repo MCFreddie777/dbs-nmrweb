@@ -19,7 +19,7 @@ class CreateSamplesTable extends Migration
 
 
             $table->string('name');
-            $table->decimal('amount')->nullable();
+            $table->integer('amount')->nullable();
             $table->text('structure');
             $table->text('note')->nullable();
             $table->timestamps();

@@ -25,7 +25,9 @@ module.exports = {
     variants: {
         padding: ['responsive', 'first', 'hover', 'focus', 'last'],
         cursor: ['hover'],
-        background: ['hover']
+        outline: ['focus'],
+        background: ['hover'],
+        border: ['focus', 'hover']
     },
     plugins: []
 };

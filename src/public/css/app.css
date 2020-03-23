@@ -22116,62 +22116,66 @@ readers do not read off random characters that represent icons */
  */
 
 @font-face {
-  font-family: "Font Awesome 5 Brands";
+    font-family: "Font Awesome 5 Brands";
 
-  font-style: normal;
+    font-style: normal;
 
-  font-weight: normal;
+    font-weight: normal;
 
-  font-display: auto;
+    font-display: auto;
 
-  src: url("../webfonts/fa-brands-400.eot");
+    src: url("../webfonts/fa-brands-400.eot");
 
-  src: url("../webfonts/fa-brands-400.eot?#iefix") format("embedded-opentype"), url("../webfonts/fa-brands-400.woff2") format("woff2"), url("../webfonts/fa-brands-400.woff") format("woff"), url("../webfonts/fa-brands-400.ttf") format("truetype"), url("../webfonts/fa-brands-400.svg#fontawesome") format("svg");
+    src: url("../webfonts/fa-brands-400.eot?#iefix") format("embedded-opentype"), url("../webfonts/fa-brands-400.woff2") format("woff2"), url("../webfonts/fa-brands-400.woff") format("woff"), url("../webfonts/fa-brands-400.ttf") format("truetype"), url("../webfonts/fa-brands-400.svg#fontawesome") format("svg");
 }
 
 .fab {
-  font-family: "Font Awesome 5 Brands";
+    font-family: "Font Awesome 5 Brands";
 }
 
-@media (min-width: 640px){
-  .sm\:sr-only{
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border-width: 0;
-  }
+.searchbar input::-webkit-search-cancel-button {
+    -webkit-appearance: none;
+}
 
-  .sm\:not-sr-only{
-    position: static;
-    width: auto;
-    height: auto;
-    padding: 0;
-    margin: 0;
-    overflow: visible;
-    clip: auto;
-    white-space: normal;
-  }
+@media (min-width: 640px) {
+    .sm\:sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border-width: 0;
+    }
 
-  .sm\:focus\:sr-only:focus{
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border-width: 0;
-  }
+    .sm\:not-sr-only {
+        position: static;
+        width: auto;
+        height: auto;
+        padding: 0;
+        margin: 0;
+        overflow: visible;
+        clip: auto;
+        white-space: normal;
+    }
 
-  .sm\:focus\:not-sr-only:focus{
-    position: static;
-    width: auto;
+    .sm\:focus\:sr-only:focus {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border-width: 0;
+    }
+
+    .sm\:focus\:not-sr-only:focus {
+        position: static;
+        width: auto;
     height: auto;
     padding: 0;
     margin: 0;
@@ -26796,14 +26800,6 @@ readers do not read off random characters that represent icons */
 
   .sm\:focus\:opacity-100:focus{
     opacity: 1;
-  }
-
-  .sm\:outline-none{
-    outline: 0;
-  }
-
-  .sm\:focus\:outline-none:focus{
-    outline: 0;
   }
 
   .sm\:overflow-auto{
@@ -42319,14 +42315,6 @@ readers do not read off random characters that represent icons */
     opacity: 1;
   }
 
-  .md\:outline-none{
-    outline: 0;
-  }
-
-  .md\:focus\:outline-none:focus{
-    outline: 0;
-  }
-
   .md\:overflow-auto{
     overflow: auto;
   }
@@ -57840,14 +57828,6 @@ readers do not read off random characters that represent icons */
     opacity: 1;
   }
 
-  .lg\:outline-none{
-    outline: 0;
-  }
-
-  .lg\:focus\:outline-none:focus{
-    outline: 0;
-  }
-
   .lg\:overflow-auto{
     overflow: auto;
   }
@@ -73359,14 +73339,6 @@ readers do not read off random characters that represent icons */
 
   .xl\:focus\:opacity-100:focus{
     opacity: 1;
-  }
-
-  .xl\:outline-none{
-    outline: 0;
-  }
-
-  .xl\:focus\:outline-none:focus{
-    outline: 0;
   }
 
   .xl\:overflow-auto{

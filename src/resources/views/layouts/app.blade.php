@@ -18,7 +18,6 @@
 
     <title>@yield('title') | {{ config('app.name') }}</title>
 
-    <script src="{{ asset('js/app.js') }}" defer></script>
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 
@@ -26,5 +25,8 @@
 <div id="app" class="h-screen">
     @yield('master')
 </div>
+
+@yield('script')
+<script defer src="{{ asset('js/app.js') }}"></script>
 </body>
 </html>

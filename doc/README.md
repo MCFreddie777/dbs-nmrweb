@@ -27,8 +27,9 @@ Celá špecifikácia je dostupná na [Wiki projektu](https://github.com/FIIT-DBS
 Projekt je napípsaný ako webová aplikácia.<br/>
 Backend je napísaný v PHP Frameworku [Laravel 7](https://laravel.com)<br/>
 Frontend bol pôvodne robený v JavaScript Frameworku [Vue.js](https://vuejs.org) ale z časového deficitu sme premigrovali na MPA verziu aplikácie.<br/>
-Na FE používame taktiež CSS Framework [Tailwind](https://tailwindcss.com/)
-a font ikoniek [Font Awesome 5](https://fontawesome.com/).
+Na FE používame taktiež CSS Framework [TailwindCSS](https://tailwindcss.com/)
+a font ikoniek [Font Awesome 5](https://fontawesome.com/).<br/>
+K administrácií chemických vzoriek používame [knižnicu JSME](https://peter-ertl.com/jsme/) od Peter Ertl a Bruno Bienfait.
 
 </p>
 
@@ -116,9 +117,110 @@ Logický dátový model sme navrhovali použitím nástroja [draw.io](https://ap
 Fyzický dátový model sme navrhovali použitím nástroja [dbdiagram.io](https://dbdiagram.io/home).
 ![Physical model](img/physical_model.png)
 
-
-
 ## Scenáre
+
+#### Autentifikácia
+
+- __Milestone:__  [1. Odovzdanie](https://github.com/FIIT-DBS2020/project-gic_souc/milestone/1)
+- __Issues:__
+    - [#6 Make login great again](https://github.com/FIIT-DBS2020/project-gic_souc/issues/6)
+
+<p>
+Používateľovi je v tomto scenári umožnené prihásiť sa do
+aplikácie pomocou vopred administrátorom vygenerovaného loginu a hesla.
+Aplikácia si pamätá reláciu prihlásenia až do odhlásenia.
+<br/> V rámci scenára je potreba prekopať Laravelovský login na custom riešenie.
+
+_Debug credentials:_<br/>
+__login:__ admin@admin.sk<br/>
+__supertajné heslo:__ Nbusr123
+</p>
+
+#### Zmena hesla
+
+- __Milestone:__  [1. Odovzdanie](https://github.com/FIIT-DBS2020/project-gic_souc/milestone/1)
+- __Issues:__
+    - [#4 Implementovanie prvého scenáru](https://github.com/FIIT-DBS2020/project-gic_souc/issues/4)
+
+<p>
+Používateľovi je taktiež umožnené dané heslo zmeniť zadaním aktuálneho hesla a nového hesla + potvrdenie.
+Heslo sa samozrejme musí zhodovať s aktuálnym. Základná validácia. Používateľ je po akcií informovaný o výsledku pomocou notifikácií.
+</p>
+
+#### Vytvorenie novej vzorky
+
+- __Milestone:__  [1. Odovzdanie](https://github.com/FIIT-DBS2020/project-gic_souc/milestone/1)
+- __Issues:__
+    - [#4 Implementovanie prvého scenáru](https://github.com/FIIT-DBS2020/project-gic_souc/issues/4)
+
+<p>
+Po kliknutí na tlačidlo nového záznamu v zozname všetkých vzoriek sa
+sa používateľovi zobrazí formulár na vytvorenie novej vzorky.
+
+Formulár používa [JSME Applet](https://peter-ertl.com/jsme/) na zjednodušenie reprezentácie chemickej štruktúry.
+Používateľ je schopný vybrať si zo zoznamu grantov, rozpúštadiel a spektrometrov a uložiť svoju akciu.
+Po uložení je notifikovaný o statuse uloženia daného záznamu (či bolo úspešné alebo nie) a následne môže vidieť svoj záznam ako posledný v zozname vzoriek.
+</p>
+
+#### List vzoriek
+
+- __Milestone:__  TBA
+- __Issues:__
+	- Search
+	- Pagination
+
+<p>
+Laborant je schopný vylistovať vzorky všetky vzorky laboratória,
+zatiaľ čo používateľ listuje iba jeho vzorky.
+Garanti vidia svoje vzorky a vzorky spadajúce pod ich granty.
+
+
+</p>
+
+#### Detail vzorky
+
+- __Milestone:__  TBA
+- __Issues:__ TBA
+
+<p>
+Všetky typy užívateľov majú možnosť vidieť detaily vzorky po vybratí zo zoznamu.
+</p>
+
+
+#### Vytvorenie používateľa
+
+- __Milestone:__  TBA
+- __Issues:__ TBA
+
+<p>
+Administrátor v sekcií správa užívateľov
+dokáže vytvoriť nové užívateľské konto alebo existujúce konto editovať (login alebo zmeniť heslo v prípade zabudnutia)
+Dôvod prečo toto robíme je, že aplikácia funguje na intranete a je uzavretá - registrácia nie je možná.
+</p>
+
+#### Prezvatie vzorky a rozbor
+
+- __Milestone:__  TBA
+- __Issues:__ TBA
+
+<p>
+Laborant prevezme vzorku ktorá ešte nemá laboranta, označí ju ako rozpracovanú - že na nej pracuje.
+Updatne sa čas modifikácie a o tomto stave je obozrejmený aj užívateľ.
+Po dokončení laborant označí vzorku (labák) ako dokončený.<br/>
+
+__Poznámka: Možno zoznam všetkých labákov v viewe laboranta? Not sure.__
+</p>
+
+#### Upravovanie a vymazávanie vzoriek
+
+- __Milestone:__  TBA
+- __Issues:__ TBA
+
+<p>
+Táto akcia je dostupná iba administrátorovi (aby sa nestrácali a nemdifikovali vzorky)
+Má možnosť pristúpiť k edit pohľadu vzorky, upraviť ju alebo vymazať.
+</p>
+
 
 ## Galéria
 #### Prihlasovcia obrazovka

@@ -23,7 +23,6 @@ Celá špecifikácia je dostupná na [Wiki projektu](https://github.com/FIIT-DBS
 ## Implementácia
 
 <p>
-
 Projekt je napípsaný ako webová aplikácia.<br/>
 Backend je napísaný v PHP Frameworku [Laravel 7](https://laravel.com)<br/>
 Frontend bol pôvodne robený v JavaScript Frameworku [Vue.js](https://vuejs.org) ale z časového deficitu sme premigrovali na MPA verziu aplikácie.<br/>
@@ -35,7 +34,6 @@ a font ikoniek [Font Awesome 5](https://fontawesome.com/).
 ## Inštalácia
 __Požiadavky__:
 - [PHP 7+](https://www.php.net/downloads)
-- [Node.js](https://nodejs.org/en/) & [NPM](https://www.npmjs.com/) - Na build frontend častí (transpilácia SASS do CSS)
 - MySQL 5.7
 - [Composer](https://getcomposer.org/) - PHP dependency manager
 
@@ -43,7 +41,6 @@ __Požiadavky__:
 git clone https://github.com/FIIT-DBS2020/project-gic_souc/
 cd project-gic_souc/src
 composer install
-npm install
 ```
 
 Po nahodení databázy a importovaní dát dostupných v `db/db_dump.sql` spustiť server pomocou:
@@ -51,3 +48,7 @@ Po nahodení databázy a importovaní dát dostupných v `db/db_dump.sql` spusti
 ```bash
 php artisan serve
 ```
+
+_Debug credentials:_<br/>
+__login:__ admin@admin.sk<br/>
+__supertajné heslo:__ Nbusr123

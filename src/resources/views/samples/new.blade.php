@@ -60,7 +60,7 @@
                     class="h-64 w-full"
                 >
                     <textarea name="structure" hidden></textarea>
-                    <div class="w-4/5">
+                    <div class="w-4/6">
                         <div id="jsme" class="flex w-full h-full justify-center mx-auto"></div>
                     </div>
                 </x-ui.label>

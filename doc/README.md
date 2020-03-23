@@ -53,8 +53,10 @@ Po nahodení databázy a importovaní dát dostupných v `db/db_dump.sql` spusti
 php artisan serve
 ```
 
+<div style="page-break-after: always;"></div>
+
 ## Databázová štruktúra
-###Entity
+### Entity
 
 #### User
 User - je entita používateľa. Je to používateľ pridaný administrátorom do databázy.
@@ -98,9 +100,14 @@ priradeného laboranta, a kedy boli vytvorené zmeny (zmena stavu alebo laborant
 Solvent je rozpúštadlo v ktorom je daná vzorka. Rozpúštadla sú dané fixne administrátorom.
 Pokiaľ je rozpúšťadlo špeciálne, daná relácia je označená ako `NULL` a rozpúštadlo musí byť vyplnené v poznámke.
 
+
+<div style="page-break-inside: avoid;">
+
 #### Spectrometer
 Spectrometer sú zariadenia v laboratóriu. V databáze sú upravované manuálne, pretože vybavenie laboratória sa nemení prakticky nikdy, s výnimkami.
 Majú daný typ a názov. Každá vzorka je vyhodnocovaná určitým spektrometrom, ktorý si užívateľ navolí.
+
+</div>
 
 #### Sample
 Najdôležitejšia entita celej aplikácie. Vzorka je vytvorená v systéme a následne odovzdaná do laboratória.
@@ -108,14 +115,19 @@ Drží informácie o sebe ako názov (vybraný používateľom), množstvo (v ml
 informáciu o tom či ju majú z laboratória vrátiť alebo po analýze zahodiť, nejakú voliteľnú poznámku a časové údaje.
 Vzorka môže byť taktiež platená z nejakého grantu, má priradeného laboranta, musí mať vybraté rozpúšťadlo a spektrometer.
 
+<div style="page-break-after: always;"></div>
+
 ### Logický dátový model
 Logický dátový model sme navrhovali použitím nástroja [draw.io](https://app.diagrams.net/).
 ![Logical model](img/logical_model.png)
 
+<div style="page-break-after: always;"></div>
 
 ### Fyzický dátový model
 Fyzický dátový model sme navrhovali použitím nástroja [dbdiagram.io](https://dbdiagram.io/home).
 ![Physical model](img/physical_model.png)
+
+<div style="page-break-after: always;"></div>
 
 ## Scenáre
 
@@ -186,6 +198,7 @@ Garanti vidia svoje vzorky a vzorky spadajúce pod ich granty.
 Všetky typy užívateľov majú možnosť vidieť detaily vzorky po vybratí zo zoznamu.
 </p>
 
+<div style="page-break-inside: avoid;">
 
 #### Vytvorenie používateľa
 
@@ -197,6 +210,8 @@ Administrátor v sekcií správa užívateľov
 dokáže vytvoriť nové užívateľské konto alebo existujúce konto editovať (login alebo zmeniť heslo v prípade zabudnutia)
 Dôvod prečo toto robíme je, že aplikácia funguje na intranete a je uzavretá - registrácia nie je možná.
 </p>
+
+</div>
 
 #### Prezvatie vzorky a rozbor
 
@@ -221,6 +236,7 @@ Táto akcia je dostupná iba administrátorovi (aby sa nestrácali a nemdifikova
 Má možnosť pristúpiť k edit pohľadu vzorky, upraviť ju alebo vymazať.
 </p>
 
+<div style="page-break-after: always;"></div>
 
 ## Galéria
 #### Prihlasovcia obrazovka

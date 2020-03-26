@@ -12,7 +12,7 @@
             <form action="#" method="POST">
                 @csrf
 
-                <div class="flex items-center pb-3">
+                <div class="flex items-center pb-3 mt-6">
                     <label
                         class="uppercase font-bold text-gray-500 text-sm block w-32 mr-5"
                         for="password"
@@ -22,7 +22,7 @@
                     <x-ui.input
                         name="old_password"
                         type="password"
-                        class="relative mt-16 border-2 rounded border-white"
+                        class="relative border-2 rounded border-white"
                         :required="true"
                         placeholder="••••••••"
                         error-key="password"

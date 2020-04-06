@@ -1,0 +1,15 @@
+{
+  "name": "doc",
+  "version": "1.0.0",
+  "description": "__Škola__: Slovenská Technická Univerzita v Bratislave<br/> __Fakulta__: Fakulta informatiky a informačných technológií<br/> __Predmet__: Databázové systémy<br/> __Študenti__: Bc. František Gič, Ján Šouc<br/> __Cvičiaci__: Ing. Samuel Pecár<br/>",
+  "main": "generate_doc.js",
+  "scripts": {
+	"generate": "node scripts/generate_doc.js",
+	"g": "npm run generate"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+	"markdown-pdf": "^10.0.0"
+  }
+}

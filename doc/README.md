@@ -6,6 +6,8 @@ __Predmet__: Databázové systémy<br/>
 __Študenti__: Bc. František Gič, Ján Šouc<br/>
 __Cvičiaci__: Ing. Samuel Pecár<br/>
 
+<div style="page-break-after: always;"></div>
+
 ## Špecifikácia
 <p>
 Systém vytvorený pre centrálne laboratória (FCHPT STU) na zjednodušenie práce s chemickými vzorkami.
@@ -20,6 +22,8 @@ Laborant ľahko vyhľadá detaily a informácie o vzorke podľa čísla na skúm
 Celá špecifikácia je dostupná na [Wiki projektu](https://github.com/FIIT-DBS2020/project-gic_souc/wiki)
 </p>
 
+<div style="page-break-after: always;"></div>
+
 ## Implementácia
 
 <p>
@@ -32,6 +36,8 @@ a font ikoniek [Font Awesome 5](https://fontawesome.com/).<br/>
 K administrácií chemických vzoriek používame [knižnicu JSME](https://peter-ertl.com/jsme/) od Peter Ertl a Bruno Bienfait.
 
 </p>
+
+<div style="page-break-after: always;"></div>
 
 ## Inštalácia
 __Požiadavky__:
@@ -63,6 +69,7 @@ User - je entita používateľa. Je to používateľ pridaný administrátorom d
 Toto heslo od administrátora si môže dodatočne zmeniť.
 
 #### Rola
+Tabuľka rola je číselníkom.
 V aplikácií rozoznávame medzi 4 druhmi rolí
 
 - __používateľ__
@@ -86,28 +93,59 @@ V aplikácií rozoznávame medzi 4 druhmi rolí
     - vytvára používateľské kontá
     - upravuje vzorky, môže ich vymazať
     - môže vymazávať používateľov
+    - spravuje vybavenie laboratórií, ako aj samotné laboratória
+
+
+<div style="page-break-inside: avoid;">
 
 #### Grant
 Grant je druh fundovania daných vyhodnocovaní vzoriek. Pokiaľ vzorka nemá zvolený grant,
 pre laboranta to znamená že od zákazníka pri prevzatí výsledkov musí zinkasovať sumu.
 Pokiaľ idú peniaze z grantu, rieši sa to reportom na konci časového obdobia mimo systému.
 
+</div>
+
+<div style="page-break-inside: avoid;">
+
+#### Status
+Tabuľka status je číselníkom.
+Status obsahuje vymenovanie rozličných statusov ktoré môže nadobúdať analýza v čase spracovania.
+
+</div>
+<div style="page-break-inside: avoid;">
+
+#### Analysis
+Analysis je entita laboratórneho úkonu. Drží informácie o stave spracovania vzorky,
+priradeného laboranta, a kedy boli vytvorené zmeny (zmena stavu alebo laboranta). Taktiež obsahuje informáciu
+o laboratóriu, v ktorom sa analýza vykonáva.
+
+</div>
+
+<div style="page-break-inside: avoid;">
+
 #### Lab
-Lab je entita laboratórneho úkonu. Drží informácie o stave spracovania vzorky,
-priradeného laboranta, a kedy boli vytvorené zmeny (zmena stavu alebo laboranta).
+Lab je laboratórium, fyzická miestnosť v ktorej sa vykonávajú analýzy. Laboratória spravuje administrátor a laboranti majú právo vybrať si dané laboratórium pri preberaní analýzy vzorky.
+
+</div>
+
+<div style="page-break-inside: avoid;">
 
 #### Solvent
 Solvent je rozpúštadlo v ktorom je daná vzorka. Rozpúštadla sú dané fixne administrátorom.
 Pokiaľ je rozpúšťadlo špeciálne, daná relácia je označená ako `NULL` a rozpúštadlo musí byť vyplnené v poznámke.
+Rozpúšťadlá spravuje - vytvára, mení iba administrátor.
 
+</div>
 
 <div style="page-break-inside: avoid;">
 
 #### Spectrometer
-Spectrometer sú zariadenia v laboratóriu. V databáze sú upravované manuálne, pretože vybavenie laboratória sa nemení prakticky nikdy, s výnimkami.
+Spectrometer sú zariadenia v laboratóriu. V aplikácií ich spravuje iba administrátor, pretože vybavenie laboratória sa nemení veľmi často.
 Majú daný typ a názov. Každá vzorka je vyhodnocovaná určitým spektrometrom, ktorý si užívateľ navolí.
 
 </div>
+
+<div style="page-break-inside: avoid;">
 
 #### Sample
 Najdôležitejšia entita celej aplikácie. Vzorka je vytvorená v systéme a následne odovzdaná do laboratória.
@@ -115,6 +153,7 @@ Drží informácie o sebe ako názov (vybraný používateľom), množstvo (v ml
 informáciu o tom či ju majú z laboratória vrátiť alebo po analýze zahodiť, nejakú voliteľnú poznámku a časové údaje.
 Vzorka môže byť taktiež platená z nejakého grantu, má priradeného laboranta, musí mať vybraté rozpúšťadlo a spektrometer.
 
+</div>
 <div style="page-break-after: always;"></div>
 
 ### Logický dátový model
@@ -130,8 +169,9 @@ Fyzický dátový model sme navrhovali použitím nástroja [dbdiagram.io](https
 <div style="page-break-after: always;"></div>
 
 ## Scenáre
+<div style="page-break-inside: avoid;">
 
-#### Autentifikácia
+### Autentifikácia
 
 - __Milestone:__  [1. Odovzdanie](https://github.com/FIIT-DBS2020/project-gic_souc/milestone/1)
 - __Issues:__
@@ -147,8 +187,13 @@ _Debug credentials:_<br/>
 __login:__ admin@admin.sk<br/>
 __supertajné heslo:__ Nbusr123
 </p>
+<br/>
 
-#### Zmena hesla
+</div>
+
+<div style="page-break-inside: avoid;">
+
+### Zmena hesla
 
 - __Milestone:__  [1. Odovzdanie](https://github.com/FIIT-DBS2020/project-gic_souc/milestone/1)
 - __Issues:__
@@ -158,8 +203,12 @@ __supertajné heslo:__ Nbusr123
 Používateľovi je taktiež umožnené dané heslo zmeniť zadaním aktuálneho hesla a nového hesla + potvrdenie.
 Heslo sa samozrejme musí zhodovať s aktuálnym. Základná validácia. Používateľ je po akcií informovaný o výsledku pomocou notifikácií.
 </p>
+<br/>
+</div>
 
-#### Vytvorenie novej vzorky
+<div style="page-break-inside: avoid;">
+
+### Vytvorenie novej vzorky
 
 - __Milestone:__  [1. Odovzdanie](https://github.com/FIIT-DBS2020/project-gic_souc/milestone/1)
 - __Issues:__
@@ -173,34 +222,57 @@ Formulár používa [JSME Applet](https://peter-ertl.com/jsme/) na zjednodušeni
 Používateľ je schopný vybrať si zo zoznamu grantov, rozpúštadiel a spektrometrov a uložiť svoju akciu.
 Po uložení je notifikovaný o statuse uloženia daného záznamu (či bolo úspešné alebo nie) a následne môže vidieť svoj záznam ako posledný v zozname vzoriek.
 </p>
+<br/>
+</div>
+<div style="page-break-inside: avoid;">
 
-#### List vzoriek
+### List vzoriek
 
-- __Milestone:__  TBA
+- __Milestone:__  [2. Odovzdanie](https://github.com/FIIT-DBS2020/project-gic_souc/milestone/2)
 - __Issues:__
-	- Search
-	- Pagination
+   - [#17 3. scenario - List of samples ](https://github.com/FIIT-DBS2020/project-gic_souc/issues/17)
+   - Search
+   - Pagination
 
 <p>
 Laborant je schopný vylistovať vzorky všetky vzorky laboratória,
 zatiaľ čo používateľ listuje iba jeho vzorky.
 Garanti vidia svoje vzorky a vzorky spadajúce pod ich granty.
-
-
 </p>
+<br/>
+</div>
+<div style="page-break-inside: avoid;">
 
-#### Detail vzorky
+### Detail vzorky
 
-- __Milestone:__  TBA
-- __Issues:__ TBA
+- __Milestone:__  [2. Odovzdanie](https://github.com/FIIT-DBS2020/project-gic_souc/milestone/2)
+- __Issues:__
+   - [#16 2. Scenario - Sample detail](https://github.com/FIIT-DBS2020/project-gic_souc/issues/16)
 
 <p>
 Všetky typy užívateľov majú možnosť vidieť detaily vzorky po vybratí zo zoznamu.
 </p>
+<br/>
+</div>
+<div style="page-break-inside: avoid;">
+
+### Administrácia laboratória
+
+- __Milestone:__  [2. Odovzdanie](https://github.com/FIIT-DBS2020/project-gic_souc/milestone/2)
+- __Issues:__
+   - [#11 Show navigation items in the menu on the left conditionally](https://github.com/FIIT-DBS2020/project-gic_souc/issues/11)
+   - [#15 Administration zone: Solvent, Spectrometer, Lab - CRUD](https://github.com/FIIT-DBS2020/project-gic_souc/issues/15)
+
+<p>
+Administrátor má v menu možnost spravovať laboratória, spektrometre aj rozpúšťadlá.
+</p>
+<br/>
+
+</div>
 
 <div style="page-break-inside: avoid;">
 
-#### Vytvorenie používateľa
+### Vytvorenie používateľa
 
 - __Milestone:__  TBA
 - __Issues:__ TBA
@@ -210,10 +282,12 @@ Administrátor v sekcií správa užívateľov
 dokáže vytvoriť nové užívateľské konto alebo existujúce konto editovať (login alebo zmeniť heslo v prípade zabudnutia)
 Dôvod prečo toto robíme je, že aplikácia funguje na intranete a je uzavretá - registrácia nie je možná.
 </p>
-
+<br/>
 </div>
 
-#### Prezvatie vzorky a rozbor
+<div style="page-break-inside: avoid;">
+
+### Prezvatie vzorky a rozbor
 
 - __Milestone:__  TBA
 - __Issues:__ TBA
@@ -225,8 +299,11 @@ Po dokončení laborant označí vzorku (labák) ako dokončený.<br/>
 
 __Poznámka: Možno zoznam všetkých labákov v viewe laboranta? Not sure.__
 </p>
+<br/>
+</div>
+<div style="page-break-inside: avoid;">
 
-#### Upravovanie a vymazávanie vzoriek
+### Upravovanie a vymazávanie vzoriek
 
 - __Milestone:__  TBA
 - __Issues:__ TBA
@@ -235,6 +312,8 @@ __Poznámka: Možno zoznam všetkých labákov v viewe laboranta? Not sure.__
 Táto akcia je dostupná iba administrátorovi (aby sa nestrácali a nemdifikovali vzorky)
 Má možnosť pristúpiť k edit pohľadu vzorky, upraviť ju alebo vymazať.
 </p>
+
+</div>
 
 <div style="page-break-after: always;"></div>
 

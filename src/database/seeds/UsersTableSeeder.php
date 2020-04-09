@@ -1,6 +1,5 @@
 <?php
 
-use App\Sample;
 use App\User;
 use Illuminate\Database\Seeder;
 
@@ -13,8 +12,8 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(User::class, 20)->create()->each(function ($user) {
-            $user->samples()->save(factory(Sample::class)->make());
-        });
+        for ($i = 1; $i <= env('TABLE_COUNT'); $i++) {
+            factory(User::class, env('TABLE_COUNT'))->create();
+        }
     }
 }

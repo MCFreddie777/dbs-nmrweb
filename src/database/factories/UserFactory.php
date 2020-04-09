@@ -2,9 +2,10 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
+use App\Sample;
+use App\Grant;
 use App\User;
 use Faker\Generator as Faker;
-use Illuminate\Support\Str;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,8 +20,21 @@ use Illuminate\Support\Str;
 
 $factory->define(User::class, function (Faker $faker) {
     return [
-        'login' => $faker->userName,
+        'login' => $faker->unique()->userName,
         'password' => Hash::make($faker->password),
         'role_id' => $faker->randomElement([2, 3, 4]),
     ];
+});
+
+$factory->afterCreating(User::class, function ($user) {
+    // Create grants for role garant
+    if ($user->role->name == 'garant') {
+        $grant = $user->grants()->save(factory(Grant::class)->make());
+        $user->grants()->attach($grant);
+    };
+
+    // Associate new samples with this user
+    for ($i = 1; $i <= (env('MAJOR_TABLE_COUNT') / env('TABLE_COUNT')); $i++) {
+        $user->samples()->save(factory(Sample::class)->make());
+    }
 });

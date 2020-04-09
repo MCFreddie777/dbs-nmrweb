@@ -29,4 +29,9 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Sample');
     }
+
+    public function grants()
+    {
+        return $this->belongsToMany('App\Grant');
+    }
 }

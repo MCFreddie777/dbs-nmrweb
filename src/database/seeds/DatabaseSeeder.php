@@ -13,20 +13,36 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // Create admin role to rule them all
-        $user = new User();
-        $role = new Role();
-        $role->name = 'admin';
-        $role->save();
+        /**
+         * Create each type of a role and associate an account
+         * e.g admin@test.sk, laborant@test.sk etc.
+         */
 
-        // Create the one and only useradmin
-        $user->login = 'admin@admin.sk';
-        $user->password = Hash::make('Nbusr123');
-        $user->role_id = $role->id;
-        $user->save();
+        $roles = [];
+
+        foreach (array('admin', 'laborant', 'garant', 'user') as $rolename) {
+            $role = new Role();
+            $role->name = $rolename;
+            $role->save();
+            $roles += [$role->name => $role];
+        }
+
+        foreach ($roles as $key => $role) {
+            $user = new User();
+            $user->login = $key . '@test.sk';
+            $user->password = Hash::make('Nbusr123');
+            $user->role_id = $role->id;
+            $user->save();
+        }
+
+        // Create fixed statuses
+        foreach (array('hotovo', 'rozpracované', 'v poradí') as $status) {
+            DB::table('statuses')->insert([
+                'name' => $status,
+            ]);
+        };
 
         $this->call([
-            RolesTableSeeder::class,
             UsersTableSeeder::class,
         ]);
     }

@@ -6,6 +6,8 @@ __Predmet__: Databázové systémy<br/>
 __Študenti__: Bc. František Gič, Ján Šouc<br/>
 __Cvičiaci__: Ing. Samuel Pecár<br/>
 
+<div style="page-break-after: always;"></div>
+
 ## Špecifikácia
 <p>
 Systém vytvorený pre centrálne laboratória (FCHPT STU) na zjednodušenie práce s chemickými vzorkami.
@@ -20,27 +22,35 @@ Laborant ľahko vyhľadá detaily a informácie o vzorke podľa čísla na skúm
 Celá špecifikácia je dostupná na [Wiki projektu](https://github.com/FIIT-DBS2020/project-gic_souc/wiki)
 </p>
 
+<div style="page-break-after: always;"></div>
+
 ## Implementácia
 
 <p>
+
 Projekt je napípsaný ako webová aplikácia.<br/>
 Backend je napísaný v PHP Frameworku [Laravel 7](https://laravel.com)<br/>
 Frontend bol pôvodne robený v JavaScript Frameworku [Vue.js](https://vuejs.org) ale z časového deficitu sme premigrovali na MPA verziu aplikácie.<br/>
-Na FE používame taktiež CSS Framework [Tailwind](https://tailwindcss.com/)
-a font ikoniek [Font Awesome 5](https://fontawesome.com/).
+Na FE používame taktiež CSS Framework [TailwindCSS](https://tailwindcss.com/)
+a font ikoniek [Font Awesome 5](https://fontawesome.com/).<br/>
+K administrácií chemických vzoriek používame [knižnicu JSME](https://peter-ertl.com/jsme/) od Peter Ertl a Bruno Bienfait.
 
 </p>
 
+<div style="page-break-after: always;"></div>
+
 ## Inštalácia
 __Požiadavky__:
-- [PHP 7+](https://www.php.net/downloads)
+- PHP 7+
+- Node.js & NPM - Na build frontend častí (transpilácia SASS do CSS)
 - MySQL 5.7
-- [Composer](https://getcomposer.org/) - PHP dependency manager
+- Composer - PHP dependency manager
 
 ```bash
 git clone https://github.com/FIIT-DBS2020/project-gic_souc/
 cd project-gic_souc/src
 composer install
+npm install
 ```
 
 Po nahodení databázy a importovaní dát dostupných v `db/db_dump.sql` spustiť server pomocou:
@@ -50,5 +60,6 @@ php artisan serve
 ```
 
 _Debug credentials:_<br/>
-__login:__ admin@admin.sk<br/>
-__supertajné heslo:__ Nbusr123
+__login:__ {rola}@test.sk<br/>
+__supertajné heslo:__ nbusr123<br/>
+_(Miesto role doplňte jedno z nasledujúcich - admin,garant,laborant,user)_

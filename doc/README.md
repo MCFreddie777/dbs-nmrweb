@@ -64,9 +64,14 @@ php artisan serve
 ## Databázová štruktúra
 ### Entity
 
+<div style="page-break-inside: avoid;">
+
 #### User
 User - je entita používateľa. Je to používateľ pridaný administrátorom do databázy.
 Toto heslo od administrátora si môže dodatočne zmeniť.
+
+</div>
+<div style="page-break-inside: avoid;">
 
 #### Rola
 Tabuľka rola je číselníkom.
@@ -95,7 +100,7 @@ V aplikácií rozoznávame medzi 4 druhmi rolí
     - môže vymazávať používateľov
     - spravuje vybavenie laboratórií, ako aj samotné laboratória
 
-
+</div>
 <div style="page-break-inside: avoid;">
 
 #### Grant
@@ -104,7 +109,6 @@ pre laboranta to znamená že od zákazníka pri prevzatí výsledkov musí zink
 Pokiaľ idú peniaze z grantu, rieši sa to reportom na konci časového obdobia mimo systému.
 
 </div>
-
 <div style="page-break-inside: avoid;">
 
 #### Status
@@ -120,14 +124,12 @@ priradeného laboranta, a kedy boli vytvorené zmeny (zmena stavu alebo laborant
 o laboratóriu, v ktorom sa analýza vykonáva.
 
 </div>
-
 <div style="page-break-inside: avoid;">
 
 #### Lab
 Lab je laboratórium, fyzická miestnosť v ktorej sa vykonávajú analýzy. Laboratória spravuje administrátor a laboranti majú právo vybrať si dané laboratórium pri preberaní analýzy vzorky.
 
 </div>
-
 <div style="page-break-inside: avoid;">
 
 #### Solvent
@@ -136,7 +138,6 @@ Pokiaľ je rozpúšťadlo špeciálne, daná relácia je označená ako `NULL` a
 Rozpúšťadlá spravuje - vytvára, mení iba administrátor.
 
 </div>
-
 <div style="page-break-inside: avoid;">
 
 #### Spectrometer
@@ -144,7 +145,6 @@ Spectrometer sú zariadenia v laboratóriu. V aplikácií ich spravuje iba admin
 Majú daný typ a názov. Každá vzorka je vyhodnocovaná určitým spektrometrom, ktorý si užívateľ navolí.
 
 </div>
-
 <div style="page-break-inside: avoid;">
 
 #### Sample
@@ -152,6 +152,15 @@ Najdôležitejšia entita celej aplikácie. Vzorka je vytvorená v systéme a n�
 Drží informácie o sebe ako názov (vybraný používateľom), množstvo (v ml), chemickú štruktúru,
 informáciu o tom či ju majú z laboratória vrátiť alebo po analýze zahodiť, nejakú voliteľnú poznámku a časové údaje.
 Vzorka môže byť taktiež platená z nejakého grantu, má priradeného laboranta, musí mať vybraté rozpúšťadlo a spektrometer.
+
+</div>
+<div style="page-break-inside: avoid;">
+
+### Napĺňanie databázy dummy dátami
+
+K napĺňaniu databázy sme použili feature PHP Frameworku Laravel s názvom [Seeding](https://laravel.com/docs/7.x/seeding) a [Factories](https://laravel.com/docs/master/database-testing#writing-factories).<br/>
+Samotné seedery a factories sú dostupné v podpriečinku `src/database`.
+K niektorým prvkom tabuliek sme použili Fake-dáta vygenerované PHP knižnicou [Faker](https://github.com/fzaninotto/Faker) ktorú používa Laravel na pozadí.
 
 </div>
 <div style="page-break-after: always;"></div>
@@ -169,6 +178,7 @@ Fyzický dátový model sme navrhovali použitím nástroja [dbdiagram.io](https
 <div style="page-break-after: always;"></div>
 
 ## Scenáre
+
 <div style="page-break-inside: avoid;">
 
 ### Autentifikácia
@@ -184,13 +194,14 @@ Aplikácia si pamätá reláciu prihlásenia až do odhlásenia.
 <br/> V rámci scenára je potreba prekopať Laravelovský login na custom riešenie.
 
 _Debug credentials:_<br/>
-__login:__ admin@admin.sk<br/>
-__supertajné heslo:__ Nbusr123
+__login:__ {rola}@test.sk<br/>
+__supertajné heslo:__ nbusr123<br/>
+_(Miesto role doplňte jedno z nasledujúcich - admin,garant,laborant,user)_
+
 </p>
 <br/>
 
 </div>
-
 <div style="page-break-inside: avoid;">
 
 ### Zmena hesla
@@ -203,9 +214,8 @@ __supertajné heslo:__ Nbusr123
 Používateľovi je taktiež umožnené dané heslo zmeniť zadaním aktuálneho hesla a nového hesla + potvrdenie.
 Heslo sa samozrejme musí zhodovať s aktuálnym. Základná validácia. Používateľ je po akcií informovaný o výsledku pomocou notifikácií.
 </p>
-<br/>
-</div>
 
+</div>
 <div style="page-break-inside: avoid;">
 
 ### Vytvorenie novej vzorky
@@ -222,7 +232,7 @@ Formulár používa [JSME Applet](https://peter-ertl.com/jsme/) na zjednodušeni
 Používateľ je schopný vybrať si zo zoznamu grantov, rozpúštadiel a spektrometrov a uložiť svoju akciu.
 Po uložení je notifikovaný o statuse uloženia daného záznamu (či bolo úspešné alebo nie) a následne môže vidieť svoj záznam ako posledný v zozname vzoriek.
 </p>
-<br/>
+
 </div>
 <div style="page-break-inside: avoid;">
 
@@ -239,7 +249,7 @@ Laborant je schopný vylistovať vzorky všetky vzorky laboratória,
 zatiaľ čo používateľ listuje iba jeho vzorky.
 Garanti vidia svoje vzorky a vzorky spadajúce pod ich granty.
 </p>
-<br/>
+
 </div>
 <div style="page-break-inside: avoid;">
 
@@ -252,7 +262,7 @@ Garanti vidia svoje vzorky a vzorky spadajúce pod ich granty.
 <p>
 Všetky typy užívateľov majú možnosť vidieť detaily vzorky po vybratí zo zoznamu.
 </p>
-<br/>
+
 </div>
 <div style="page-break-inside: avoid;">
 
@@ -266,10 +276,8 @@ Všetky typy užívateľov majú možnosť vidieť detaily vzorky po vybratí zo
 <p>
 Administrátor má v menu možnost spravovať laboratória, spektrometre aj rozpúšťadlá.
 </p>
-<br/>
 
 </div>
-
 <div style="page-break-inside: avoid;">
 
 ### Vytvorenie používateľa
@@ -282,9 +290,8 @@ Administrátor v sekcií správa užívateľov
 dokáže vytvoriť nové užívateľské konto alebo existujúce konto editovať (login alebo zmeniť heslo v prípade zabudnutia)
 Dôvod prečo toto robíme je, že aplikácia funguje na intranete a je uzavretá - registrácia nie je možná.
 </p>
-<br/>
-</div>
 
+</div>
 <div style="page-break-inside: avoid;">
 
 ### Prezvatie vzorky a rozbor
@@ -297,9 +304,9 @@ Laborant prevezme vzorku ktorá ešte nemá laboranta, označí ju ako rozpracov
 Updatne sa čas modifikácie a o tomto stave je obozrejmený aj užívateľ.
 Po dokončení laborant označí vzorku (labák) ako dokončený.<br/>
 
-__Poznámka: Možno zoznam všetkých labákov v viewe laboranta? Not sure.__
+_Poznámka: Možno zoznam všetkých labákov v viewe laboranta? Not sure._
 </p>
-<br/>
+
 </div>
 <div style="page-break-inside: avoid;">
 
@@ -314,7 +321,6 @@ Má možnosť pristúpiť k edit pohľadu vzorky, upraviť ju alebo vymazať.
 </p>
 
 </div>
-
 <div style="page-break-after: always;"></div>
 
 ## Galéria

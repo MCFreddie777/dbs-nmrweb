@@ -4,7 +4,6 @@
 
 use App\User;
 use Faker\Generator as Faker;
-use Illuminate\Support\Str;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,7 +18,7 @@ use Illuminate\Support\Str;
 
 $factory->define(User::class, function (Faker $faker) {
     return [
-        'login' => $faker->userName,
+        'login' => $faker->unique()->userName,
         'password' => Hash::make($faker->password),
         'role_id' => $faker->randomElement([2, 3, 4]),
     ];

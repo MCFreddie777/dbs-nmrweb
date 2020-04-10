@@ -7,14 +7,13 @@ use App\Grant;
 use App\Sample;
 use App\Solvent;
 use App\Spectrometer;
-use App\User;
 use Faker\Generator as Faker;
 
 $factory->define(Sample::class, function (Faker $faker) {
     return [
         'name' => $faker->sentence($nbWords = 3, $variableNbWords = true),
         'amount' => $faker->numberBetween(0, 500),
-        'structure' => $faker->realText(50),
+        'structure' => "C/2=F/C=P\C([C+]1#[O+2][Br+]NCOO1)=C2",
         'note' => $faker->sentence,
 
         'analysis_id' => function () {

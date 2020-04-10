@@ -10,7 +10,6 @@ use Faker\Generator as Faker;
 
 $factory->define(Analysis::class, function (Faker $faker) {
 
-
     return [
         'user_id' => function () {
             return User::where('role_id', 2)->pluck('id')->random();

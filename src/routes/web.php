@@ -25,8 +25,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/', 'SampleController@index');
         Route::get('/new', 'SampleController@create');
         Route::post('/', 'SampleController@store');
-        Route::get('/{id}/edit', 'SampleController@edit');
-        Route::post('/{id}', 'SampleController@update');
+        Route::get('/{id}', 'SampleController@show');
     });
 
     Route::prefix('users')->group(function () {

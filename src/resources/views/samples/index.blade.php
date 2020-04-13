@@ -7,6 +7,7 @@
         'data' =>  [
             'items'=> $samples,
             'empty'=> 'Ľutujeme, nenašli sa žiadne vzorky',
+            'onclick'=> '/samples/'
         ],
         'header'=> [
             'items'=> [

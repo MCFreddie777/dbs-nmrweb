@@ -113,6 +113,37 @@ class SampleController extends Controller
             ->withErrors(['Nepodarilo sa vytvoriť vzorku']);
     }
 
+    public function show(Request $request)
+    {
+//        $sample = Sample::findOrFail($request['id']);
+
+        // Ew.
+        $sample = DB::select("
+                SELECT
+                s.id,s.user_id,u.login as user_login,
+                s.name,s.amount,s.structure,s.note,s.created_at, s.updated_at,
+                sp.name as spectrometer_name , sp.type as spectrometer_type,
+                so.name as solvent_name,
+                g.name as grant_name,
+                s.analysis_id as analysis_id,
+                st.name as analysis_status,
+                u2.login as analysis_laborant_login
+                from samples s
+                LEFT JOIN spectrometers sp ON sp.id = s.spectrometer_id
+                LEFT JOIN solvents so ON so.id = s.solvent_id
+                LEFT JOIN grants g ON g.id = s.grant_id
+                LEFT JOIN analyses a ON a.id = s.analysis_id
+                LEFT JOIN users u ON u.id = s.user_id
+                LEFT JOIN users u2 ON u2.id = a.user_id
+                LEFT JOIN statuses st ON st.id = a.status_id
+                WHERE s.id = :id",
+            ['id' => $request['id']]
+        )[0];
+
+        return view('samples.detail')
+            ->with('sample', $sample);
+    }
+
     public function rules()
     {
         $this->redirect = url()->previous();

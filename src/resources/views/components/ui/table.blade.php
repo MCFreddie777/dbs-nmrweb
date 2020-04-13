@@ -32,6 +32,9 @@
         <tr
             class="hover:cursor-pointer hover:bg-gray-100 table w-full"
             style="table-layout: fixed;"
+            @isset($options['data']['onclick'])
+            onclick="window.location = '{{ url($options['data']['onclick']) }}/{{ $item->id }}'"
+            @endisset
         >
             {{ $tableitem($item) }}
         </tr>

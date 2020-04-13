@@ -21,6 +21,7 @@ Route::get('/', function () {
 });
 
 Route::middleware('auth')->group(function () {
+
     Route::prefix('samples')->group(function () {
         Route::get('/', 'SampleController@index');
         Route::get('/new', 'SampleController@create');
@@ -28,12 +29,23 @@ Route::middleware('auth')->group(function () {
         Route::get('/{id}', 'SampleController@show');
     });
 
-    Route::prefix('users')->group(function () {
-        Route::get('/', 'UserController@index');
+    Route::prefix('analyses')->group(function () {
+        Route::get('/', 'AnalysesController@index');
     });
 
-    Route::prefix('files')->group(function () {
-        Route::get('/', 'FileController@index');
+    Route::middleware('can:admin,garant')->group(function () {
+        Route::prefix('grants')->group(function () {
+            Route::get('/', 'GrantsController@index');
+        });
+    });
+
+    Route::middleware('can:admin')->group(function () {
+        Route::prefix('users')->group(function () {
+            Route::get('/', 'UserController@index');
+        });
+        Route::prefix('administration')->group(function () {
+            Route::get('/', 'AdministrationController@index');
+        });
     });
 
     Route::prefix('change-password')->group(function () {

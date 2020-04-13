@@ -4,10 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Role;
 use App\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('can:admin');
+    }
+
     public function index()
     {
         /*

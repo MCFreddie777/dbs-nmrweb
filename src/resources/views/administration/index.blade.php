@@ -1,6 +1,6 @@
 @extends('master')
 
-@section('title','Súbory')
+@section('title','Správa laboratórií')
 
 @section('content')
     <p>Nothing here.</p>

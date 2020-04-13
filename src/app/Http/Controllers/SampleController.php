@@ -57,9 +57,6 @@ class SampleController extends Controller
 
     public function store(Request $request)
     {
-        // TODO (fgic): [HOTFIX]: Previous URL somehow gets to /webfonts/ folder. =(
-        session()->setPreviousUrl('/samples/new');
-
         $validated = $request->validate($this->rules());
 
         /**
@@ -146,8 +143,6 @@ class SampleController extends Controller
 
     public function rules()
     {
-        $this->redirect = url()->previous();
-
         return [
             'name' => 'required|string',
             'amount' => 'required|integer',

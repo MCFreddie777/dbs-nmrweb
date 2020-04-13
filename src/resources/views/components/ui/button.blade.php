@@ -1,4 +1,4 @@
-@props(['text','icon','class','primary','secondary','type','href'])
+@props(['text','icon','class','primary','secondary','danger','type','href'])
 
 
 @php
@@ -7,6 +7,8 @@
         $class_object .= 'bg-yellow-500 text-white hover:bg-yellow-400 ';
     if (isset($secondary))
       $class_object .= 'border border-gray-600 text-gray-600 bg-gray-200 ';
+     if (isset($danger))
+      $class_object .= 'border border-red-500 text-red-500 hover:bg-red-500 hover:text-white ';
     if (isset($class))
       $class_object .= $class;
 
@@ -26,11 +28,13 @@
                 value="{{$text}}"
                 class="focus:outline-none bg-transparent hover:cursor-pointer"
                 style="text-align: center;"
+                {{ $attributes }}
             />
         @else
             <button
                 class="focus:outline-none"
                 style="text-align: center;"
+                {{ $attributes }}
             >
                 {{ $text }}
             </button>

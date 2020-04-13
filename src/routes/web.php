@@ -44,7 +44,36 @@ Route::middleware('auth')->group(function () {
             Route::get('/', 'UserController@index');
         });
         Route::prefix('administration')->group(function () {
-            Route::get('/', 'AdministrationController@index');
+
+            Route::get('/', function () {
+                return view('administration.index');
+            });
+
+            Route::prefix('spectrometers')->group(function () {
+                Route::get('/', 'SpectrometerController@index');
+                Route::post('/', 'SpectrometerController@store');
+                Route::get('/new', 'SpectrometerController@create');
+                Route::get('/{id}', 'SpectrometerController@edit');
+                Route::post('/{id}', 'SpectrometerController@update');
+                Route::delete('/{id}', 'SpectrometerController@destroy');
+            });
+            Route::prefix('solvents')->group(function () {
+                Route::get('/', 'SolventController@index');
+                Route::post('/', 'SolventController@store');
+                Route::get('/new', 'SolventController@create');
+                Route::get('/{id}', 'SolventController@edit');
+                Route::post('/{id}', 'SolventController@update');
+                Route::delete('/{id}', 'SolventController@destroy');
+
+            });
+            Route::prefix('labs')->group(function () {
+                Route::get('/', 'LabController@index');
+                Route::post('/', 'LabController@store');
+                Route::get('/new', 'LabController@create');
+                Route::get('/{id}', 'LabController@edit');
+                Route::post('/{id}', 'LabController@update');
+                Route::delete('/{id}', 'LabController@destroy');
+            });
         });
     });
 

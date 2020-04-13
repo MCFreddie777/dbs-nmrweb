@@ -9,20 +9,32 @@
                     'title'=> 'Vzorky',
                 ],
                  [
-                    'path'=>'/files',
-                    'icon'=>'fas fa-file',
-                    'title'=> 'Súbory',
+                    'path'=>'/analyses',
+                    'icon'=>'fas fa-microscope',
+                    'title'=> 'Analýzy',
+                ],
+                [
+                    'path' => '/grants',
+                    'icon' => 'fas fa-file-invoice-dollar',
+                    'title'=> 'Granty',
+                    'gates' => ['garant','admin']
                 ]
             ]
         ],
         [
             'title' => 'Administrácia',
+            'gates' => ['admin'],
             'items' => [
                 [
                     'path'=> '/users',
                     'icon'=> 'fas fa-user-friends',
                     'title'=> 'Správa užívateľov'
                 ],
+                [
+                    'path'=> '/administration',
+                    'icon'=> 'fas fa-tools',
+                    'title'=> 'Správa laboratória'
+                ]
             ]
         ],
         [

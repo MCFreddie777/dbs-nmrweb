@@ -44,7 +44,21 @@ Route::middleware('auth')->group(function () {
             Route::get('/', 'UserController@index');
         });
         Route::prefix('administration')->group(function () {
-            Route::get('/', 'AdministrationController@index');
+
+            Route::get('/', function () {
+                return view('administration.index');
+            });
+
+            Route::prefix('spectrometers')->group(function () {
+                Route::get('/', 'SpectrometerController@index');
+            });
+            Route::prefix('solvents')->group(function () {
+                Route::get('/', 'SolventController@index');
+
+            });
+            Route::prefix('labs')->group(function () {
+                Route::get('/', 'LabController@index');
+            });
         });
     });
 

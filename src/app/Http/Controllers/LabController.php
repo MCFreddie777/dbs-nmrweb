@@ -16,10 +16,22 @@ class LabController extends Controller
 
     public function create()
     {
+        return view('administration.labs.new');
     }
 
     public function store(Request $request)
     {
+        $validated = $request->validate($this->rules());
+        $lab = Lab::create($validated);
+
+        if ($lab->id) {
+            session()->put(['success' => ['Laboratórium bolo vytvorené.']]);
+            return redirect('/administration/labs');
+        } else {
+            return redirect()->back()
+                ->withInput()
+                ->withErrors(['Nepodarilo sa vytvoriť laboratórium']);
+        }
     }
 
     public function edit($id)
@@ -29,26 +41,43 @@ class LabController extends Controller
             ->with('lab', $lab);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
-        //
+        $validated = $request->validate($this->rules());
+        $lab = Lab::findOrFail($id);
+
+        $updated = $lab->update($validated);
+
+        if ($updated) {
+            session()->put(['success' => ['Zmeny boli uložené']]);
+            return redirect()->back();
+        } else {
+            return redirect()->back()
+                ->withInput()
+                ->withErrors(['Nepodarilo sa upraviť laboratórium']);
+        }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
-        //
+        $lab = Lab::findOrFail($id);
+        $deleted = $lab->delete();
+
+        if ($deleted) {
+            session()->put(['success' => ['Laboratórium bolo vymazané']]);
+            return redirect('/administration/labs');
+        } else {
+            return redirect()->back()
+                ->withInput()
+                ->withErrors(['Nepodarilo sa odstrániť laboratórium']);
+        }
+    }
+
+    public function rules()
+    {
+        return [
+            'name' => 'required|string|max:6',
+            'address' => 'required|string',
+        ];
     }
 }

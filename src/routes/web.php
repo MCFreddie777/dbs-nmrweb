@@ -68,6 +68,11 @@ Route::middleware('auth')->group(function () {
             });
             Route::prefix('labs')->group(function () {
                 Route::get('/', 'LabController@index');
+                Route::post('/', 'LabController@store');
+                Route::get('/new', 'LabController@create');
+                Route::get('/{id}', 'LabController@edit');
+                Route::post('/{id}', 'LabController@update');
+                Route::delete('/{id}', 'LabController@destroy');
             });
         });
     });

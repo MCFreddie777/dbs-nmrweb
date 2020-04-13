@@ -51,6 +51,11 @@ Route::middleware('auth')->group(function () {
 
             Route::prefix('spectrometers')->group(function () {
                 Route::get('/', 'SpectrometerController@index');
+                Route::post('/', 'SpectrometerController@store');
+                Route::get('/new', 'SpectrometerController@create');
+                Route::get('/{id}', 'SpectrometerController@edit');
+                Route::post('/{id}', 'SpectrometerController@update');
+                Route::delete('/{id}', 'SpectrometerController@destroy');
             });
             Route::prefix('solvents')->group(function () {
                 Route::get('/', 'SolventController@index');

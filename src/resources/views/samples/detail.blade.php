@@ -32,14 +32,20 @@
                     center
                     for="amount"
                 >
-                    <a
-                        class="text-blue-600 hover:underline"
-                        href="{{ url('/users',$sample->user_id) }}"
-                        {{--                        href="{{ url('/users',$sample->user->id) }}"--}}
-                    >
-                        {{ $sample->user_login }}
-                        {{--                        {{ $sample->user->login }}--}}
-                    </a>
+                    @can('admin')
+                        <a
+                            class="text-blue-600 hover:underline"
+                            href="{{ url('/users',$sample->user_id) }}"
+                            {{--                        href="{{ url('/users',$sample->user->id) }}"--}}
+                        >
+                            {{ $sample->user_login }}
+                            {{--                        {{ $sample->user->login }}--}}
+                        </a>
+                    @else
+                        <p>
+                            {{ $sample->user_login }}
+                        </p>
+                    @endcan
                 </x-ui.label>
             @endif
 
@@ -125,15 +131,22 @@
                 for="note"
             >
                 @isset($sample->analysis_id)
-                    {{--                @isset($sample->analysis)--}}
-                    <a
-                        class="text-blue-600 hover:underline"
-                        href="{{ url('/analyses',$sample->analysis_id) }}"
-                        {{--                        href="{{ url('/analyses',$sample->analysis->id) }}"--}}
-                    >
-                        {{ ucfirst($sample->analysis_status) }} ({{ $sample->analysis_laborant_login }})
-                        {{--                        {{ ucfirst($sample->analysis->status()->name) }} ({{ $sample->analysis->user->login }})--}}
-                    </a>
+                    @if(Gate::any(['admin','laborant']) || $sample->user_id == Auth::id())
+                        {{--                @isset($sample->analysis)--}}
+                        <a
+                            class="text-blue-600 hover:underline"
+                            href="{{ url('/analyses',$sample->analysis_id) }}"
+                            {{--                        href="{{ url('/analyses',$sample->analysis->id) }}"--}}
+                        >
+                            {{ ucfirst($sample->analysis_status) }} ({{ $sample->analysis_laborant_login }})
+                            {{--                        {{ ucfirst($sample->analysis->status()->name) }} ({{ $sample->analysis->user->login }})--}}
+                        </a>
+                    @else
+                        {{--                @isset($sample->analysis)--}}
+                        <p>
+                            {{ ucfirst($sample->analysis_status) }} ({{ $sample->analysis_laborant_login }})
+                        </p>
+                    @endif
                 @else
                     <p class="text-gray-500">Nepriradené</p>
                 @endisset

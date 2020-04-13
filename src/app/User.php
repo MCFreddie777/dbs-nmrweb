@@ -34,4 +34,15 @@ class User extends Authenticatable
     {
         return $this->belongsToMany('App\Grant');
     }
+
+    /**
+     * Checks if user has role in the parameter
+     *
+     * @param $role
+     * @return bool
+     */
+    public function hasRole($role)
+    {
+        return $this->role->name === $role;
+    }
 }

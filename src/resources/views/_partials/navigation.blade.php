@@ -33,7 +33,7 @@
                 [
                     'path'=> '/administration',
                     'icon'=> 'fas fa-tools',
-                    'title'=> 'Správa laboratória'
+                    'title'=> 'Správa laboratórií'
                 ]
             ]
         ],

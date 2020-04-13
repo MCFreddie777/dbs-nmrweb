@@ -29859,9 +29859,10 @@ module.exports = g;
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
-	if (!module.webpackPolyfill) {
-		module.deprecate = function() {};
-		module.paths = [];
+    if (!module.webpackPolyfill) {
+        module.deprecate = function () {
+        };
+        module.paths = [];
         // module.parent = undefined by default
         if (!module.children) module.children = [];
         Object.defineProperty(module, "loaded", {
@@ -29972,12 +29973,14 @@ module.exports = function(module) {
           !*** multi ./resources/js/app.js ./resources/sass/app.scss ***!
           \*************************************************************/
         /*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+        /***/ (function (module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/feri/Library/Mobile Documents/com~apple~CloudDocs/STU/1.Ing/LS/DBS/Projekt/nmrweb/src/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /Users/feri/Library/Mobile Documents/com~apple~CloudDocs/STU/1.Ing/LS/DBS/Projekt/nmrweb/src/resources/sass/app.scss */"./resources/sass/app.scss");
+            __webpack_require__(/*! /Users/feri/Library/Mobile Documents/com~apple~CloudDocs/STU/1.Ing/LS/DBS/Projekt/nmrweb/src/resources/js/app.js */"./resources/js/app.js");
+            module.exports = __webpack_require__(/*! /Users/feri/Library/Mobile Documents/com~apple~CloudDocs/STU/1.Ing/LS/DBS/Projekt/nmrweb/src/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
-/***/ })
+            /***/
+        })
 
-/******/ });
+        /******/
+    });

@@ -28,4 +28,9 @@ class Sample extends Model
     {
         return $this->belongsTo('App\Spectrometer');
     }
+
+    public function analysis()
+    {
+        return $this->belongsTo('App\Analysis');
+    }
 }

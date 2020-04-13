@@ -59,6 +59,11 @@ Route::middleware('auth')->group(function () {
             });
             Route::prefix('solvents')->group(function () {
                 Route::get('/', 'SolventController@index');
+                Route::post('/', 'SolventController@store');
+                Route::get('/new', 'SolventController@create');
+                Route::get('/{id}', 'SolventController@edit');
+                Route::post('/{id}', 'SolventController@update');
+                Route::delete('/{id}', 'SolventController@destroy');
 
             });
             Route::prefix('labs')->group(function () {

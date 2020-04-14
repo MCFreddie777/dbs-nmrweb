@@ -13,11 +13,36 @@
         style="table-layout: fixed;"
     >
         @foreach($options['header']['items'] as $index => $item)
-            <th
-                class="py-1 pb-4 font-normal uppercase text-xs text-gray-500 hover:cursor-pointer relative
-                {{ tableRowsClassObject($options, $index,false) }}">
-                {{  $item['name'] }}
-            </th>
+            @isset($options['pagination'])
+                <th
+                    class="py-1 pb-4 uppercase text-xs text-gray-500 hover:cursor-pointer relative
+                    {{ tableRowsClassObject($options, $index,false) }}
+                    {{ $options['pagination']->sort->key  == ($item['key'] ?? $item['name']) ? 'font-bold': 'font-normal' }}"
+                >
+                    <a
+                        href="{{ Request::url() .'?'. http_build_query(array_merge(Request::query(), [
+                            'sort' => ($item['key'] ?? $item['name']),
+                            'direction' => (($options['pagination']->sort->key  == ($item['key'] ?? $item['name'])) && $options['pagination']->sort->direction == 'ASC') ? 'DESC' : 'ASC',
+                            'page'=>1,
+                        ]))}}"
+                    >
+                        {{  $item['name'] }}
+                        @if( $options['pagination']->sort->key  == ($item['key'] ?? $item['name']) )
+                            <i
+                                class="fas ml-1 absolute top-0 mt-1 {{ ($options['pagination']->sort->direction == 'ASC') ? 'fa-sort-down' : 'fa-sort-up' }}"
+                                style="top: 1px;"
+                            ></i>
+                        @endif
+                    </a>
+                </th>
+            @else
+                <th
+                    class="py-1 pb-4 uppercase text-xs text-gray-500 hover:cursor-pointer relative
+                     {{ tableRowsClassObject($options, $index,false) }}"
+                >
+                    {{  $item['name'] }}
+                </th>
+            @endisset
         @endforeach
     </tr>
     </thead>

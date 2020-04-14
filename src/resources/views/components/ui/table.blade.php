@@ -56,3 +56,32 @@
     @endforelse
     </tbody>
 </table>
+@isset($options['pagination'])
+    <div
+        class="flex flex-row p-2 items-center pl-5"
+    >
+        <x-ui.button
+            class="rounded h-8"
+            icon="fas fa-chevron-left"
+            primary
+            type="link"
+            :href="Request::url().'?'. http_build_query(array_merge(Request::query(), ['page' => $options['pagination']->current_page-1]))"
+            :disabled="$options['pagination']->current_page == 1 ? true : false"
+        >
+
+        </x-ui.button>
+        <span class="text-gray-500 mx-2">
+            <span class="font-bold">{{$options['pagination']->current_page}}</span>
+            of
+            <span class="font-bold">{{$options['pagination']->total_pages}}</span>
+        </span>
+        <x-ui.button
+            class="rounded h-8"
+            icon="fas fa-chevron-right"
+            primary
+            type="link"
+            :href="Request::url().'?'. http_build_query(array_merge(Request::query(), ['page' => $options['pagination']->current_page+1]))"
+            :disabled="$options['pagination']->current_page == $options['pagination']->total_pages ? true : false"
+        ></x-ui.button>
+    </div>
+@endisset

@@ -20,7 +20,7 @@
                 ],
                 [
                     'name'=> 'používateľ',
-                    'key'=> 'user.login',
+                    'key'=> 'login',
                 ],
                 [
 

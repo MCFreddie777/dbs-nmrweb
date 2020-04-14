@@ -33,7 +33,7 @@ class CustomPaginator
             'limit' => $limit,
             'sort' => (object)[
                 'key' => $request->get('sort') ?? 'id',
-                'real_key' => ($request->get('sort') == 'id') ? 1 : $request->get('sort'),
+                'real_key' => ($request->get('sort') == 'id' || !$request->get('sort')) ? 1 : $request->get('sort'),
                 'direction' => $request->get('direction') ?? 'ASC'
             ],
             'offset' => (($request->get('page') ?? 1) - 1) * $limit

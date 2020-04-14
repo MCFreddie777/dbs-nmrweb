@@ -17,6 +17,9 @@
                     'name'=> 'rola',
                     'key'=> 'role.name',
                 ],
+                [
+                    'name'=> 'počet vzoriek',
+                ],
             ],
         ],
         'layout'=> [
@@ -70,7 +73,14 @@
                 class="text-gray-600
                     {{ tableRowsClassObject($options,1)}}"
             >
-                {{ $item->role->name }}
+                {{ $item->role_name }}
+            </td>
+
+            <td
+                class="text-gray-600
+                    {{ tableRowsClassObject($options,1)}}"
+            >
+                {{ $item->samples }}
             </td>
             @endscopedslot
         </x-ui.table>

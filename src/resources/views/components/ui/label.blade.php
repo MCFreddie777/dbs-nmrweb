@@ -6,7 +6,9 @@
 >
     <label
         class="uppercase font-bold text-gray-500 text-sm block mr-2 w-1/5"
+        @isset($for)
         for="{{ $for }}"
+        @endisset
     >
         {{ $key }}:
     </label>

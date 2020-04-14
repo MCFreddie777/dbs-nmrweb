@@ -22,20 +22,57 @@ class UserController extends Controller
          *  We need this ugly code right here
          */
 
-        // $users = User::all();
-
-        $query = DB::raw('
-            SELECT u.login,r.name FROM users u LEFT JOIN roles r ON u.role_id = r.id;
+        $users = DB::select('
+            SELECT
+                u.id,
+                u.login,
+                r.name as role_name,
+                IFNULL(samples,0) as samples
+            FROM users u
+            JOIN roles r on r.id = u.role_id
+            LEFT JOIN (
+                SELECT user_id, COUNT(1) as samples
+                FROM samples
+                GROUP BY user_id
+            )
+            smp ON smp.user_id = u.id
         ');
 
-        $users = User::fromQuery($query, []);
-
-        $users = $users->map(function ($user) {
-            $user->role = new Role();
-            $user->role->name = $user->name;
-            return $user;
-        });
 
         return view('users.index')->with('users', $users);
+    }
+
+    public function show($id)
+    {
+        $user = DB::select('
+            SELECT
+            u.id, u.login,
+            r.name as role_name,
+            IFNULL(samples,0) as samples,
+            IFNULL(analyses,0) as analyses,
+            avg_timestamp
+            FROM users u
+            JOIN roles r on r.id = u.role_id
+            LEFT JOIN (
+                SELECT
+                    user_id,
+                    COUNT(1) as samples
+                FROM samples
+                GROUP BY user_id
+            ) smp ON smp.user_id = u.id
+            LEFT JOIN (
+                SELECT
+                    user_id,
+                    COUNT(1) as analyses,
+                    ROUND(AVG(TIMESTAMPDIFF(SECOND,created_at,updated_at))) as avg_timestamp
+                FROM analyses
+                GROUP BY user_id
+            ) a ON a.user_id = u.id
+            WHERE u.id = :id
+            ',
+            ['id' => $id]
+        )[0];
+
+        return view('users.detail')->with('user', $user);
     }
 }

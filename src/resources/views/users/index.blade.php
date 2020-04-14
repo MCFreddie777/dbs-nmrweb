@@ -7,6 +7,7 @@
         'data' =>  [
             'items'=> $users,
             'empty'=> 'Ľutujeme, nenašli sa žiadni užívatelia',
+            'onclick'=> '/users/'
         ],
         'header'=> [
             'items'=> [
@@ -16,6 +17,9 @@
                 [
                     'name'=> 'rola',
                     'key'=> 'role.name',
+                ],
+                [
+                    'name'=> 'počet vzoriek',
                 ],
             ],
         ],
@@ -70,7 +74,14 @@
                 class="text-gray-600
                     {{ tableRowsClassObject($options,1)}}"
             >
-                {{ $item->role->name }}
+                {{ $item->role_name }}
+            </td>
+
+            <td
+                class="text-gray-600
+                    {{ tableRowsClassObject($options,1)}}"
+            >
+                {{ $item->samples }}
             </td>
             @endscopedslot
         </x-ui.table>

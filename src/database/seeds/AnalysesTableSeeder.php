@@ -2,6 +2,7 @@
 
 use App\Analysis;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 
 class AnalysesTableSeeder extends Seeder
@@ -28,7 +29,8 @@ class AnalysesTableSeeder extends Seeder
             factory(Analysis::class)->create([
                 'user_id' => $laborants[array_rand($laborants, 1)],
                 'lab_id' => rand(1, $table_count),
-                'status_id' => rand(1, 3)
+                'status_id' => rand(1, 3),
+                'updated_at' => Carbon::now()->addRealHours(rand(0, 72))->addRealMinutes(rand(0, 60))
             ]);
         }
     }

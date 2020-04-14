@@ -38,7 +38,8 @@
                 'width-sm'=> 64,
                 'left'=> true
             ]
-        ]
+        ],
+        'pagination' => $pagination
     ];
 @endphp
 
@@ -74,7 +75,7 @@
             <td
                 class="text-gray-600 {{ tableRowsClassObject($options,0) }}"
             >
-                <p>{{ $item['id'] }}</p>
+                <p>{{ $item->id }}</p>
             </td>
 
 
@@ -82,19 +83,19 @@
                 class="{{ tableRowsClassObject($options,1)}}"
             >
                 {{--                @dump($options['layout'][2])--}}
-                {{  $item['name'] }}
+                {{  $item->name }}
             </td>
 
             <td
                 class="{{ tableRowsClassObject($options,2)}}"
             >
-                {{  $item['user']['login'] }}
+                {{  $item->user->login }}
             </td>
 
             <td
                 class="{{ tableRowsClassObject($options,3)}}"
             >
-                {{  $item['created_at'] }}
+                {{  $item->created_at }}
             </td>
 
 

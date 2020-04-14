@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Grant;
+use App\Helpers\CustomPaginator;
 use App\Sample;
 use App\Solvent;
 use App\Spectrometer;
@@ -17,44 +18,38 @@ class SampleController extends Controller
 {
     public function index(Request $request)
     {
+        if (!CustomPaginator::validateRequest($request))
+            return redirect()->back();
 
         $results = DB::select('SELECT COUNT(1) as number from samples')[0]->number;
-        $limit = 10;
 
-        $pagination = (object)[
-            'current_page' => $request->get('page') ?? 1,
-            'total_pages' => $results / $limit,
-            'limit' => $limit,
-            'offset' => (($request->get('page') ?? 1) - 1) * $limit
-        ];
-
-
-        // In case of page is out of range
-        if ($pagination->current_page > $pagination->total_pages)
-            abort(404);
+        $pagination = CustomPaginator::makePaginationObject($request, 10, $results);
 
         /*
          *  Because ORM is not allowed in this phase
          *  We need this ugly code right here
          */
 
-        $query = DB::select('
-            SELECT
-                s.id,
-                s.name,
-                u.login,
-                s.created_at
-            FROM samples s
-            JOIN users u ON s.user_id = u.id
-            ORDER BY 1 ASC
-            LIMIT :limit
-            OFFSET :offset;
-        ', [
-            'limit' => $limit,
+        // Ew, gross. Sample::all();
+
+        $query = "
+        SELECT
+            s.id,
+            s.name,
+            u.login,
+            s.created_at
+        FROM samples s
+        JOIN (users u) ON s.user_id = u.id
+        ORDER BY "
+            . $pagination->sort->real_key . " " . $pagination->sort->direction .
+            " LIMIT :limit OFFSET :offset";
+
+        $result = DB::select($query, [
+            'limit' => $pagination->limit,
             'offset' => $pagination->offset
         ]);
 
-        $samples = (object)$query;
+        $samples = (object)$result;
 
         foreach ($samples as $sample) {
             $sample->user = new User();

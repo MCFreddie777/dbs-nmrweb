@@ -1,17 +1,21 @@
-@props(['text','icon','class','primary','secondary','danger','type','href'])
+@props(['text','icon','class','primary','secondary','danger','type','href','disabled'])
 
 
 @php
-    $class_object = "flex justify-center items-center px-3 py-1 focus:outline-none hover:cursor-pointer ";
-    if (isset($primary))
-        $class_object .= 'bg-yellow-500 text-white hover:bg-yellow-400 ';
-    if (isset($secondary))
-      $class_object .= 'border border-gray-600 text-gray-600 bg-gray-200 ';
+    $class_object = "flex justify-center items-center px-3 py-1 focus:outline-none ";
+    if (isset ($disabled) && $disabled)
+     $class_object .= 'bg-gray-400 text-white hover:bg-gray-400 hover:cursor-default ';
+    else {
+     $class_object .= 'hover:cursor-pointer ';
+     if (isset($primary))
+         $class_object .= 'bg-yellow-500 text-white hover:bg-yellow-400 ';
+     if (isset($secondary))
+         $class_object .= 'border border-gray-600 text-gray-600 bg-gray-200 ';
      if (isset($danger))
-      $class_object .= 'border border-red-500 text-red-500 hover:bg-red-500 hover:text-white ';
+         $class_object .= 'border border-red-500 text-red-500 hover:bg-red-500 hover:text-white ';
+    }
     if (isset($class))
-      $class_object .= $class;
-
+     $class_object .= $class;
 @endphp
 
 @if(!isset($type) || (isset($type) && $type != 'link'))
@@ -19,7 +23,7 @@
         class="{{$class_object}}"
     >
         @isset($icon)
-            <i class="mr-2 {{ $icon }}"/></i>
+            <i class="{{ isset($text) ? 'mr-2': '' }} {{ $icon }}"/></i>
         @endisset
 
         @if(isset($type) && $type == 'submit')
@@ -36,20 +40,28 @@
                 style="text-align: center;"
                 {{ $attributes }}
             >
-                {{ $text }}
+                @isset($text)
+                    {{ $text }}
+                @endisset
             </button>
         @endif
     </div>
 @else
     <a
+        @if(isset($disabled) && $disabled)
+        @else
         href="{{$href}}"
+        @endif
         class="{{$class_object}}"
         style="text-align: center;"
+        {{$attributes}}
     >
         @isset($icon)
-            <i class="mr-2 {{ $icon }}"/></i>
-        @endisset
+            <i class="{{ isset($text) ? 'mr-2': '' }}  {{ $icon }}"/></i>
+        @endisset($icon)
 
-        {{ $text }}
+        @isset($text)
+            {{ $text }}
+        @endisset($text)
     </a>
 @endif

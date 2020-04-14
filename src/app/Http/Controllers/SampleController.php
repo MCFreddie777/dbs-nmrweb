@@ -15,28 +15,55 @@ use Illuminate\Support\Facades\DB;
 
 class SampleController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+
+        $results = DB::select('SELECT COUNT(1) as number from samples')[0]->number;
+        $limit = 10;
+
+        $pagination = (object)[
+            'current_page' => $request->get('page') ?? 1,
+            'total_pages' => $results / $limit,
+            'limit' => $limit,
+            'offset' => (($request->get('page') ?? 1) - 1) * $limit
+        ];
+
+
+        // In case of page is out of range
+        if ($pagination->current_page > $pagination->total_pages)
+            abort(404);
 
         /*
          *  Because ORM is not allowed in this phase
          *  We need this ugly code right here
          */
-        // $samples = Sample::all();
 
-        $query = DB::raw('
-            SELECT s.id,s.name,u.login,s.created_at FROM samples s LEFT JOIN users u ON s.user_id = u.id;
-        ');
-        $samples = Sample::fromQuery($query, []);
+        $query = DB::select('
+            SELECT
+                s.id,
+                s.name,
+                u.login,
+                s.created_at
+            FROM samples s
+            JOIN users u ON s.user_id = u.id
+            ORDER BY 1 ASC
+            LIMIT :limit
+            OFFSET :offset;
+        ', [
+            'limit' => $limit,
+            'offset' => $pagination->offset
+        ]);
 
-        $samples = $samples->map(function ($sample) {
+        $samples = (object)$query;
+
+        foreach ($samples as $sample) {
             $sample->user = new User();
             $sample->user->login = $sample->login;
-            return $sample;
-        });
+        };
 
         return view('samples.index')
-            ->with('samples', $samples);
+            ->with('samples', $samples)
+            ->with('pagination', $pagination);
     }
 
     public function create()

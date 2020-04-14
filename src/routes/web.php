@@ -40,9 +40,12 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::middleware('can:admin')->group(function () {
+
         Route::prefix('users')->group(function () {
             Route::get('/', 'UserController@index');
+            Route::get('/{id}', 'UserController@show');
         });
+
         Route::prefix('administration')->group(function () {
 
             Route::get('/', function () {

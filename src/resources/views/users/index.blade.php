@@ -7,6 +7,7 @@
         'data' =>  [
             'items'=> $users,
             'empty'=> 'Ľutujeme, nenašli sa žiadni užívatelia',
+            'onclick'=> '/users/'
         ],
         'header'=> [
             'items'=> [

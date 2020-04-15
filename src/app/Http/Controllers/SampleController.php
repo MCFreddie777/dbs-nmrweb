@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Grant;
 use App\Helpers\CustomPaginator;
+use App\Helpers\CustomSearch;
 use App\Sample;
 use App\Solvent;
 use App\Spectrometer;
@@ -18,12 +19,14 @@ class SampleController extends Controller
 {
     public function index(Request $request)
     {
-        if (!CustomPaginator::validateRequest($request))
+        if (
+            !CustomPaginator::validateRequest($request, ['login', 'name', 'created_at', 'id']) ||
+            !CustomSearch::validateRequest($request)
+        )
             return redirect()->back();
 
-        $results = DB::select('SELECT COUNT(1) as number from samples')[0]->number;
-
-        $pagination = CustomPaginator::makePaginationObject($request, 10, $results);
+        $search = $request->get('search') ?? '';
+        $pagination = CustomPaginator::makePaginationObject($request, 10);
 
         /*
          *  Because ORM is not allowed in this phase
@@ -40,14 +43,26 @@ class SampleController extends Controller
             s.created_at
         FROM samples s
         JOIN (users u) ON s.user_id = u.id
+        WHERE s.id LIKE :search1 OR u.login LIKE :search2
         ORDER BY "
             . $pagination->sort->real_key . " " . $pagination->sort->direction .
             " LIMIT :limit OFFSET :offset";
 
         $result = DB::select($query, [
             'limit' => $pagination->limit,
-            'offset' => $pagination->offset
+            'offset' => $pagination->offset,
+            'search1' => '%' . $search . '%',
+            'search2' => '%' . $search . '%',
         ]);
+
+        if ($search) {
+            $rows = DB::select("SELECT FOUND_ROWS() as count")[0];
+            $pagination->setTotalPages($rows->count);
+        } else {
+            $rows = DB::select("SELECT COUNT(1) as count FROM samples")[0];
+            $pagination->setTotalPages($rows->count);
+        }
+        CustomPaginator::validate($pagination);
 
         $samples = (object)$result;
 

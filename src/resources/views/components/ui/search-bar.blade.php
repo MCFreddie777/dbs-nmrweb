@@ -5,11 +5,14 @@
     @isset($class) {{$class}} @endisset"
 >
     <i
-        class="fas fa-search text-gray-500 px-1"
+        class="fas fa-search text-gray-500 px-1 pl-2"
+        onclick="document.querySelector('#searchForm').submit()"
     ></i>
     <input
+        name="search"
         type="search"
         class="focus:outline-none w-full py-1 pl-2 rounded-full"
         placeholder="Vyhľadať..."
+        {{ $attributes }}
     />
 </div>

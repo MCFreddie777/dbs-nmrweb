@@ -23683,14 +23683,14 @@ readers do not read off random characters that represent icons */
     }
 
     .sm\:bg-left {
-    background-position: left;
-  }
+        background-position: left;
+    }
 
-  .sm\:bg-left-bottom{
-    background-position: left bottom;
-  }
+    .sm\:bg-left-bottom {
+        background-position: left bottom;
+    }
 
-  .sm\:bg-left-top{
+    .sm\:bg-left-top {
     background-position: left top;
   }
 
@@ -36961,15 +36961,15 @@ readers do not read off random characters that represent icons */
     white-space: normal;
   }
 
-  .md\:appearance-none{
-    -webkit-appearance: none;
-       -moz-appearance: none;
-            appearance: none;
-  }
+    .md\:appearance-none {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+    }
 
-  .md\:bg-fixed{
-    background-attachment: fixed;
-  }
+    .md\:bg-fixed {
+        background-attachment: fixed;
+    }
 
     .md\:bg-local {
         background-attachment: local;
@@ -38092,14 +38092,14 @@ readers do not read off random characters that represent icons */
     }
 
     .md\:bg-left {
-    background-position: left;
-  }
+        background-position: left;
+    }
 
-  .md\:bg-left-bottom{
-    background-position: left bottom;
-  }
+    .md\:bg-left-bottom {
+        background-position: left bottom;
+    }
 
-  .md\:bg-left-top{
+    .md\:bg-left-top {
     background-position: left top;
   }
 
@@ -51370,15 +51370,15 @@ readers do not read off random characters that represent icons */
     white-space: normal;
   }
 
-  .lg\:appearance-none{
-    -webkit-appearance: none;
-       -moz-appearance: none;
-            appearance: none;
-  }
+    .lg\:appearance-none {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+    }
 
-  .lg\:bg-fixed{
-    background-attachment: fixed;
-  }
+    .lg\:bg-fixed {
+        background-attachment: fixed;
+    }
 
     .lg\:bg-local {
         background-attachment: local;
@@ -52501,14 +52501,14 @@ readers do not read off random characters that represent icons */
     }
 
     .lg\:bg-left {
-    background-position: left;
-  }
+        background-position: left;
+    }
 
-  .lg\:bg-left-bottom{
-    background-position: left bottom;
-  }
+    .lg\:bg-left-bottom {
+        background-position: left bottom;
+    }
 
-  .lg\:bg-left-top{
+    .lg\:bg-left-top {
     background-position: left top;
   }
 
@@ -65779,15 +65779,15 @@ readers do not read off random characters that represent icons */
     white-space: normal;
   }
 
-  .xl\:appearance-none{
-    -webkit-appearance: none;
-       -moz-appearance: none;
-            appearance: none;
-  }
+    .xl\:appearance-none {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+    }
 
-  .xl\:bg-fixed{
-    background-attachment: fixed;
-  }
+    .xl\:bg-fixed {
+        background-attachment: fixed;
+    }
 
     .xl\:bg-local {
         background-attachment: local;
@@ -66910,14 +66910,14 @@ readers do not read off random characters that represent icons */
     }
 
     .xl\:bg-left {
-    background-position: left;
-  }
+        background-position: left;
+    }
 
-  .xl\:bg-left-bottom{
-    background-position: left bottom;
-  }
+    .xl\:bg-left-bottom {
+        background-position: left bottom;
+    }
 
-  .xl\:bg-left-top{
+    .xl\:bg-left-top {
     background-position: left top;
   }
 

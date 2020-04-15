@@ -2,6 +2,21 @@
 
 @section('title','Vzorky')
 
+@section('script')
+    <script defer>
+        setTimeout(function () {
+            const form = document.querySelector('#searchForm');
+            form.addEventListener('submit', event => {
+                event.preventDefault();
+                const input = document.querySelector('#searchForm input[type="search"]');
+                if (!input.value.trim())
+                    input.remove();
+                form.submit();
+            })
+        }, 750);
+    </script>
+@endsection
+
 @php
     $options=[
         'data' =>  [
@@ -50,11 +65,20 @@
                 Vzorky
             </h1>
             <div class="flex justify-end">
-                <x-ui.search-bar
-                    class="shadow-sm border mr-3"
-                    :extendable="true"
-                >
-                </x-ui.search-bar>
+                <form action="{{ Request::fullUrl() }}" id="searchForm" class="inline">
+                    @if(Request::get('sort'))
+                        <input type="hidden" name="sort" value="{{Request::get('sort')}}">
+                    @endif
+                    @if(Request::get('direction'))
+                        <input type="hidden" name="direction" value="{{Request::get('direction')}}">
+                    @endif
+                    <x-ui.search-bar
+                        class="shadow-sm border mr-3"
+                        :extendable="true"
+                        :value="Request::get('search')"
+                    >
+                    </x-ui.search-bar>
+                </form>
                 <x-ui.button
                     icon="fas fa-plus"
                     class="rounded-full"

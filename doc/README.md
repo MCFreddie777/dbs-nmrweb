@@ -199,9 +199,12 @@ __supertajné heslo:__ nbusr123<br/>
 _(Miesto role doplňte jedno z nasledujúcich - admin,garant,laborant,user)_
 
 </p>
+</div>
 <br/>
 
-</div>
+#### Screenshoty
+![Login screen](img/login_screen.png)
+
 <div style="page-break-inside: avoid;">
 
 ### Zmena hesla
@@ -216,6 +219,10 @@ Heslo sa samozrejme musí zhodovať s aktuálnym. Základná validácia. Použí
 </p>
 
 </div>
+
+#### Screenshoty
+![Change password view](img/change_password.png)
+
 <div style="page-break-inside: avoid;">
 
 ### Vytvorenie novej vzorky
@@ -234,6 +241,25 @@ Po uložení je notifikovaný o statuse uloženia daného záznamu (či bolo ús
 </p>
 
 </div>
+
+
+#### Screenshoty
+![Sample create](img/sample_create.png)
+
+#### Query
+```mysql
+SELECT * FROM `spectrometers` WHERE id = :id;
+SELECT * FROM `solvents` WHERE id = :id;
+SELECT * FROM `grants` WHERE id = :id;
+```
+
+```mysql
+INSERT INTO samples
+(`name`, `amount`, `structure`, `note`, `solvent_id`, `spectrometer_id`, `grant_id`, `user_id`, `updated_at`, `created_at`)
+values
+(:name, :amount, :structure, :note, :solvent_id, :spectrometer_id, :grant_id, :user_id, :updated_at, :created_at);
+```
+
 <div style="page-break-inside: avoid;">
 
 ### List vzoriek
@@ -251,6 +277,29 @@ Garanti vidia svoje vzorky a vzorky spadajúce pod ich granty.
 </p>
 
 </div>
+
+
+#### Screenshoty
+![Sample index](img/samples_index.png)
+
+#### Query
+```mysql
+ SELECT
+    s.id,
+    s.name,
+    u.login,
+    s.created_at
+FROM samples s
+JOIN (users u) ON s.user_id = u.id
+WHERE s.id LIKE :search OR u.login LIKE :search
+ORDER BY :key :direction
+LIMIT :limit OFFSET :offset;
+```
+
+```mysql
+SELECT FOUND_ROWS() as count;
+```
+
 <div style="page-break-inside: avoid;">
 
 ### Detail vzorky
@@ -264,6 +313,33 @@ Všetky typy užívateľov majú možnosť vidieť detaily vzorky po vybratí zo
 </p>
 
 </div>
+
+
+#### Screenshoty
+![Sample detail](img/samples_detail.png)
+
+#### Query
+```mysql
+ SELECT
+    s.id,s.user_id,u.login as user_login,
+    s.name,s.amount,s.structure,s.note,s.created_at, s.updated_at,
+    sp.name as spectrometer_name , sp.type as spectrometer_type,
+    so.name as solvent_name,
+    g.name as grant_name,
+    s.analysis_id as analysis_id,
+    st.name as analysis_status,
+    u2.login as analysis_laborant_login
+FROM samples s
+LEFT JOIN spectrometers sp ON sp.id = s.spectrometer_id
+LEFT JOIN solvents so ON so.id = s.solvent_id
+LEFT JOIN grants g ON g.id = s.grant_id
+LEFT JOIN analyses a ON a.id = s.analysis_id
+LEFT JOIN users u ON u.id = s.user_id
+LEFT JOIN users u2 ON u2.id = a.user_id
+LEFT JOIN statuses st ON st.id = a.status_id
+WHERE s.id = :id;
+```
+
 <div style="page-break-inside: avoid;">
 
 ### Administrácia laboratória
@@ -278,6 +354,99 @@ Administrátor má v menu možnost spravovať laboratória, spektrometre aj rozp
 </p>
 
 </div>
+
+
+#### Screenshoty
+![Administration lab](img/administration_lab.png)
+
+![Administration lab index](img/administration_lab_index.png)
+
+![Administration lab edit](img/administration_lab_edit.png)
+
+<div style="page-break-inside: avoid;">
+
+### Zoznam používateľov
+
+- __Milestone:__  [1. Odovzdanie](https://github.com/FIIT-DBS2020/project-gic_souc/milestone/1)
+- __Issues:__
+   - [#10 Implement first scenario](https://github.com/FIIT-DBS2020/project-gic_souc/pull/10/commits/b47eef5bdc760754ef19ad5746fb7a8f5f8108c9)
+
+
+<p>
+Administrátor v sekcií správa užívateľov vidí zoznam používateľov
+spolu s počtom vzoriek ktoré vytvorili.
+</p>
+
+</div>
+
+#### Screenshoty
+![User index](img/user_index.png)
+
+#### Query
+```mysql
+SELECT
+    u.id,
+    u.login,
+    r.name as role_name,
+    IFNULL(samples,0) as samples
+FROM users u
+JOIN roles r on r.id = u.role_id
+LEFT JOIN (
+    SELECT user_id, COUNT(1) as samples
+    FROM samples
+    GROUP BY user_id
+)
+smp ON smp.user_id = u.id
+```
+
+<div style="page-break-inside: avoid;">
+
+### Detail používateľa
+
+- __Milestone:__  [2. Odovzdanie](https://github.com/FIIT-DBS2020/project-gic_souc/milestone/2)
+- __Issues:__
+   - [#26 Implement advanced aggregation functions](https://github.com/FIIT-DBS2020/project-gic_souc/issues/26)
+
+<p>
+Administrátor v sekcií správa užívateľov
+dokáže zobraziť detail používateľa.
+Pokiaľ je prezeraným užívateľom laborant, v sekcií je vidno počet vzoriek, ktoré má priradené k analýze
+a taktiež vidí priemerný čas týchto vzoriek, koľko mu trvá analýza
+</p>
+
+</div>
+
+#### Screenshoty
+![User detail](img/user_detail.png)
+
+#### Query
+```mysql
+SELECT
+    u.id, u.login,
+    r.name as role_name,
+    IFNULL(samples,0) as samples,
+    IFNULL(analyses,0) as analyses,
+    avg_timestamp
+FROM users u
+JOIN roles r on r.id = u.role_id
+LEFT JOIN (
+    SELECT
+        user_id,
+        COUNT(1) as samples
+    FROM samples
+    GROUP BY user_id
+) smp ON smp.user_id = u.id
+LEFT JOIN (
+    SELECT
+        user_id,
+        COUNT(1) as analyses,
+        ROUND(AVG(TIMESTAMPDIFF(SECOND,created_at,updated_at))) as avg_timestamp
+    FROM analyses
+    GROUP BY user_id
+) a ON a.user_id = u.id
+WHERE u.id = :id
+```
+
 <div style="page-break-inside: avoid;">
 
 ### Vytvorenie používateľa
@@ -321,16 +490,3 @@ Má možnosť pristúpiť k edit pohľadu vzorky, upraviť ju alebo vymazať.
 </p>
 
 </div>
-<div style="page-break-after: always;"></div>
-
-## Galéria
-#### Prihlasovcia obrazovka
-![Login screen](img/login_screen.png)
-
-#### Zoznam všetkých vzoriek
-![Index of samples](img/samples_index.png)
-
-#### Detail vzorky
-![Sample detail](img/samples_detail.png)
-
-

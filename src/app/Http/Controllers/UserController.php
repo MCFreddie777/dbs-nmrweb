@@ -12,12 +12,6 @@ use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
-
-    public function __construct()
-    {
-        $this->middleware('can:admin');
-    }
-
     public function index(Request $request)
     {
         if (

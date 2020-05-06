@@ -28,21 +28,17 @@ class SampleController extends Controller
         $search = $request->get('search') ?? '';
         $pagination = CustomPaginator::makePaginationObject($request, 10);
 
-        $samples = Sample::leftjoin('users', 'users.id', '=', 'samples.user_id')
+        $samples = Sample::joinSamplesTable()
             ->select('users.login', 'samples.*')
-            ->distinct()
-            ->where('users.login', 'like', '%' . $search . '%')
-            ->orWhere('samples.id', 'like', '%' . $search . '%')
+            ->search($search)
             ->orderBy($pagination->sort->real_key, $pagination->sort->direction)
-            ->offset($pagination->offset)
-            ->limit($pagination->limit)
+            ->take($pagination->limit)->skip($pagination->offset)
             ->get();
 
-
-        if ($search)
-            $rows = DB::select(DB::raw("SELECT FOUND_ROWS() as count"))[0];
-        else
-            $rows = DB::select(DB::raw("SELECT COUNT(1) as count FROM samples"))[0];
+        $rows = Sample::joinSamplesTable()
+            ->select(DB::raw("count(1) as count"))
+            ->search($search)
+            ->first();
 
         $pagination->setTotalPages($rows->count);
         CustomPaginator::validate($pagination);

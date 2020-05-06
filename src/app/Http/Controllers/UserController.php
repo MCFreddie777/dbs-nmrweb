@@ -3,8 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Analysis;
+use App\Helpers\CustomPaginator;
+use App\Helpers\CustomSearch;
 use App\User;
 use Carbon\CarbonInterval;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -14,12 +18,37 @@ class UserController extends Controller
         $this->middleware('can:admin');
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::all();
+        if (
+            !CustomPaginator::validateRequest($request, ['login', 'role', 'samples']) ||
+            !CustomSearch::validateRequest($request)
+        )
+            return redirect()->back();
+
+        $search = $request->get('search') ?? '';
+        $pagination = CustomPaginator::makePaginationObject($request, 8);
+
+        $users = User::joinRolesTable()
+            ->joinSamplesTable()
+            ->select('users.*', 'roles.name as role', DB::raw("count(1) as samples"))
+            ->orderBy($pagination->sort->real_key, $pagination->sort->direction)
+            ->search($search)
+            ->groupBy('users.id')
+            ->take($pagination->limit)->skip($pagination->offset)
+            ->get();
+
+        $rows = User::joinRolesTable()
+            ->select(DB::raw("count(1) as count"))
+            ->search($search)
+            ->first();
+
+        $pagination->setTotalPages($rows->count);
+        CustomPaginator::validate($pagination);
 
         return view('users.index')
-            ->with('users', $users);
+            ->with('users', $users)
+            ->with('pagination', $pagination);
     }
 
     public function show($id)

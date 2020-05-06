@@ -33,4 +33,18 @@ class Sample extends Model
     {
         return $this->belongsTo('App\Analysis');
     }
+
+    public function scopeJoinSamplesTable($query)
+    {
+        return $query
+            ->leftjoin('users', 'users.id', '=', 'samples.user_id');
+    }
+
+    public function scopeSearch($query, $search)
+    {
+        return $query
+            ->distinct()
+            ->where('users.login', 'like', '%' . $search . '%')
+            ->orWhere('samples.id', 'like', '%' . $search . '%');
+    }
 }

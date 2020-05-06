@@ -50,4 +50,24 @@ class User extends Authenticatable
     {
         return $this->role->name === $role;
     }
+
+    public function scopeJoinRolesTable($query)
+    {
+        return $query
+            ->join('roles', 'roles.id', '=', 'users.role_id');
+    }
+
+    public function scopeJoinSamplesTable($query)
+    {
+        return $query
+            ->join('samples', 'samples.user_id', '=', 'users.id');
+    }
+
+    public function scopeSearch($query, $search)
+    {
+        return $query
+            ->distinct()
+            ->where('users.login', 'like', '%' . $search . '%')
+            ->orWhere('roles.name', 'like', '%' . $search . '%');
+    }
 }

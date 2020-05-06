@@ -47,4 +47,10 @@ class Sample extends Model
             ->where('users.login', 'like', '%' . $search . '%')
             ->orWhere('samples.id', 'like', '%' . $search . '%');
     }
+
+    public function scopeOnlyMine($query, $id)
+    {
+        return $query
+            ->where('samples.user_id', $id);
+    }
 }

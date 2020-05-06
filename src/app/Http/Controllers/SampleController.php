@@ -13,6 +13,8 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Validator;
 
 
 class SampleController extends Controller
@@ -32,13 +34,35 @@ class SampleController extends Controller
             ->select('users.login', 'samples.*')
             ->search($search)
             ->orderBy($pagination->sort->real_key, $pagination->sort->direction)
-            ->take($pagination->limit)->skip($pagination->offset)
-            ->get();
+            ->take($pagination->limit)->skip($pagination->offset);
 
+        // total number of records (pagination e.g. [1 of 10])
         $rows = Sample::joinSamplesTable()
             ->select(DB::raw("count(1) as count"))
-            ->search($search)
-            ->first();
+            ->search($search);
+
+        // Only admin is allowed to see all records
+        if (Gate::allows('user')) {
+            $samples->onlyMine(Auth::id());
+            $rows->onlyMine(Auth::id());
+        }
+
+        // grant search
+        $validator = Validator::make($request->all(), [
+            'grant' => 'sometimes|numeric'
+        ]);
+
+        if ($validator->fails())
+            return redirect()->back();
+
+        if (!!$request->get('grant')) {
+            $samples = $samples->whereGrantId($request->get('grant'));
+            $rows = $rows->whereGrantId($request->get('grant'));
+        }
+
+        // fetch from DB
+        $samples = $samples->get();
+        $rows = $rows->first();
 
         $pagination->setTotalPages($rows->count);
         CustomPaginator::validate($pagination);

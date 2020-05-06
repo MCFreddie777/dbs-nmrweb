@@ -27,6 +27,6 @@ class Pagination
 
     public function setTotalPages(int $rows)
     {
-        $this->total_pages = (int)($rows / $this->limit);
+        $this->total_pages = (int)ceil($rows / $this->limit);
     }
 }

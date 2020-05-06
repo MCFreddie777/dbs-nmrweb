@@ -33,13 +33,14 @@ Route::middleware('auth')->group(function () {
         Route::get('/', 'AnalysesController@index');
     });
 
-    Route::middleware('can:admin,garant')->group(function () {
+    Route::middleware('role:garant,admin')->group(function () {
         Route::prefix('grants')->group(function () {
             Route::get('/', 'GrantsController@index');
+            Route::get('/{id}', 'GrantsController@show');
         });
     });
 
-    Route::middleware('can:admin')->group(function () {
+    Route::middleware('role:admin')->group(function () {
 
         Route::prefix('users')->group(function () {
             Route::get('/', 'UserController@index');

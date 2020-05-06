@@ -37,7 +37,7 @@ class User extends Authenticatable
 
     public function grants()
     {
-        return $this->belongsToMany('App\Grant');
+        return $this->belongsToMany('App\Grant', 'grant_user');
     }
 
     /**
@@ -54,13 +54,13 @@ class User extends Authenticatable
     public function scopeJoinRolesTable($query)
     {
         return $query
-            ->join('roles', 'roles.id', '=', 'users.role_id');
+            ->leftjoin('roles', 'roles.id', '=', 'users.role_id');
     }
 
     public function scopeJoinSamplesTable($query)
     {
         return $query
-            ->join('samples', 'samples.user_id', '=', 'users.id');
+            ->leftjoin('samples', 'samples.user_id', '=', 'users.id');
     }
 
     public function scopeSearch($query, $search)

@@ -2,16 +2,40 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\CustomPaginator;
+use App\Helpers\CustomSearch;
 use App\Lab;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class LabController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $labs = Lab::all();
+        if (
+            !CustomPaginator::validateRequest($request, ['name', 'address']) ||
+            !CustomSearch::validateRequest($request)
+        )
+            return redirect()->back();
+
+        $search = $request->get('search') ?? '';
+        $pagination = CustomPaginator::makePaginationObject($request, 10);
+
+        $labs = Lab::search($search)
+            ->orderBy($pagination->sort->real_key, $pagination->sort->direction)
+            ->take($pagination->limit)->skip($pagination->offset)
+            ->get();
+
+        $rows = Lab::select(DB::raw("count(1) as count"))
+            ->search($search)
+            ->first();
+
+        $pagination->setTotalPages($rows->count);
+        CustomPaginator::validate($pagination);
+
         return view('administration.labs.index')
-            ->with('labs', $labs);
+            ->with('labs', $labs)
+            ->with('pagination', $pagination);
     }
 
     public function create()

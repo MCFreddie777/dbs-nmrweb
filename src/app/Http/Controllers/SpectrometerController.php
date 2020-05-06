@@ -2,16 +2,40 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\CustomPaginator;
+use App\Helpers\CustomSearch;
 use App\Spectrometer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class SpectrometerController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $spectrometers = Spectrometer::all();
+        if (
+            !CustomPaginator::validateRequest($request, ['name', 'type']) ||
+            !CustomSearch::validateRequest($request)
+        )
+            return redirect()->back();
+
+        $search = $request->get('search') ?? '';
+        $pagination = CustomPaginator::makePaginationObject($request, 10);
+
+        $spectrometers = Spectrometer::search($search)
+            ->orderBy($pagination->sort->real_key, $pagination->sort->direction)
+            ->take($pagination->limit)->skip($pagination->offset)
+            ->get();
+
+        $rows = Spectrometer::select(DB::raw("count(1) as count"))
+            ->search($search)
+            ->first();
+
+        $pagination->setTotalPages($rows->count);
+        CustomPaginator::validate($pagination);
+
         return view('administration.spectrometers.index')
-            ->with('spectrometers', $spectrometers);
+            ->with('spectrometers', $spectrometers)
+            ->with('pagination', $pagination);
     }
 
     public function create()

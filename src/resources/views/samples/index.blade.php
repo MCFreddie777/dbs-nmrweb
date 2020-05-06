@@ -106,8 +106,7 @@
             <td
                 class="{{ tableRowsClassObject($options,1)}}"
             >
-                {{--                @dump($options['layout'][2])--}}
-                {{  $item->name }}
+                {{  (strlen($item->name) < 32 ) ? $item->name  : substr($item->name,0,29).'...'  }}
             </td>
 
             <td

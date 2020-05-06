@@ -25,8 +25,7 @@
                 {{ $sample->name }}
             </h1>
 
-            @if($sample->user_id != Auth::id())
-                {{--            @if($sample->user->id != Auth::id())--}}
+            @if($sample->user->id != Auth::id())
                 <x-ui.label
                     key="vytvoril"
                     center
@@ -35,15 +34,13 @@
                     @can('admin')
                         <a
                             class="text-blue-600 hover:underline"
-                            href="{{ url('/users',$sample->user_id) }}"
-                            {{--                        href="{{ url('/users',$sample->user->id) }}"--}}
+                            href="{{ url('/users',$sample->user->id) }}"
                         >
-                            {{ $sample->user_login }}
-                            {{--                        {{ $sample->user->login }}--}}
+                            {{ $sample->user->login }}
                         </a>
                     @else
                         <p>
-                            {{ $sample->user_login }}
+                            {{ $sample->user->login }}
                         </p>
                     @endcan
                 </x-ui.label>
@@ -81,8 +78,7 @@
             >
                 <p
                 >
-                    {{ $sample->spectrometer_name }} ({{ $sample->spectrometer_type }})
-                    {{--                    {{ $sample->spectrometer->name }} ({{ $sample->spectrometer->type }})--}}
+                    {{ $sample->spectrometer->name }} ({{ $sample->spectrometer->type }})
                 </p>
             </x-ui.label>
 
@@ -94,8 +90,7 @@
             >
                 <p
                 >
-                    {{ $sample->solvent_name }}
-                    {{--                    {{ $sample->solvent->name }}--}}
+                    {{ $sample->solvent->name }}
                 </p>
             </x-ui.label>
 
@@ -105,10 +100,8 @@
                 center
                 for="grant"
             >
-                @isset($sample->grant_name)
-                    {{--                @isset($sample->grant)--}}
-                    {{ $sample->grant_name }}
-                    {{--                    {{ $sample->grant->name }}--}}
+                @isset($sample->grant)
+                    {{ $sample->grant->name }}
                 @else
                     <p class="text-gray-500">Nie</p>
                 @endisset
@@ -130,21 +123,17 @@
                 key="analýza"
                 for="note"
             >
-                @isset($sample->analysis_id)
+                @isset($sample->analysis)
                     @if(Gate::any(['admin','laborant']) || $sample->user_id == Auth::id())
-                        {{--                @isset($sample->analysis)--}}
                         <a
                             class="text-blue-600 hover:underline"
-                            href="{{ url('/analyses',$sample->analysis_id) }}"
-                            {{--                        href="{{ url('/analyses',$sample->analysis->id) }}"--}}
+                            href="{{ url('/analyses',$sample->analysis->id) }}"
                         >
-                            {{ ucfirst($sample->analysis_status) }} ({{ $sample->analysis_laborant_login }})
-                            {{--                        {{ ucfirst($sample->analysis->status()->name) }} ({{ $sample->analysis->user->login }})--}}
+                            {{ ucfirst($sample->analysis->status()->name) }} ({{ $sample->analysis->user->login }})
                         </a>
                     @else
-                        {{--                @isset($sample->analysis)--}}
                         <p>
-                            {{ ucfirst($sample->analysis_status) }} ({{ $sample->analysis_laborant_login }})
+                            {{ ucfirst($sample->analysis->status()->name) }} ({{ $sample->analysis->user->login }})
                         </p>
                     @endif
                 @else

@@ -74,14 +74,14 @@
                 class="text-gray-600
                     {{ tableRowsClassObject($options,1)}}"
             >
-                {{ $item->role_name }}
+                {{ $item->role->name }}
             </td>
 
             <td
                 class="text-gray-600
                     {{ tableRowsClassObject($options,1)}}"
             >
-                {{ $item->samples }}
+                {{ $item->samples->count() }}
             </td>
             @endscopedslot
         </x-ui.table>

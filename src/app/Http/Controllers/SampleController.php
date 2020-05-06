@@ -28,48 +28,24 @@ class SampleController extends Controller
         $search = $request->get('search') ?? '';
         $pagination = CustomPaginator::makePaginationObject($request, 10);
 
-        /*
-         *  Because ORM is not allowed in this phase
-         *  We need this ugly code right here
-         */
+        $samples = Sample::leftjoin('users', 'users.id', '=', 'samples.user_id')
+            ->select('users.login', 'samples.*')
+            ->distinct()
+            ->where('users.login', 'like', '%' . $search . '%')
+            ->orWhere('samples.id', 'like', '%' . $search . '%')
+            ->orderBy($pagination->sort->real_key, $pagination->sort->direction)
+            ->offset($pagination->offset)
+            ->limit($pagination->limit)
+            ->get();
 
-        // Ew, gross. Sample::all();
 
-        $query = "
-        SELECT
-            s.id,
-            s.name,
-            u.login,
-            s.created_at
-        FROM samples s
-        JOIN (users u) ON s.user_id = u.id
-        WHERE s.id LIKE :search1 OR u.login LIKE :search2
-        ORDER BY "
-            . $pagination->sort->real_key . " " . $pagination->sort->direction .
-            " LIMIT :limit OFFSET :offset";
+        if ($search)
+            $rows = DB::select(DB::raw("SELECT FOUND_ROWS() as count"))[0];
+        else
+            $rows = DB::select(DB::raw("SELECT COUNT(1) as count FROM samples"))[0];
 
-        $result = DB::select($query, [
-            'limit' => $pagination->limit,
-            'offset' => $pagination->offset,
-            'search1' => '%' . $search . '%',
-            'search2' => '%' . $search . '%',
-        ]);
-
-        if ($search) {
-            $rows = DB::select("SELECT FOUND_ROWS() as count")[0];
-            $pagination->setTotalPages($rows->count);
-        } else {
-            $rows = DB::select("SELECT COUNT(1) as count FROM samples")[0];
-            $pagination->setTotalPages($rows->count);
-        }
+        $pagination->setTotalPages($rows->count);
         CustomPaginator::validate($pagination);
-
-        $samples = (object)$result;
-
-        foreach ($samples as $sample) {
-            $sample->user = new User();
-            $sample->user->login = $sample->login;
-        };
 
         return view('samples.index')
             ->with('samples', $samples)
@@ -78,13 +54,9 @@ class SampleController extends Controller
 
     public function create()
     {
-//        $spectrometers = Spectrometer::all();
-//        $solvents = Solvent::all();
-//        $grants = Grant::all();
-        $spectrometers = Spectrometer::fromQuery(DB::raw('SELECT * FROM `spectrometers`;'), []);
-        $solvents = Solvent::fromQuery(DB::raw('SELECT * FROM `solvents`;'), []);
-        $grants = Grant::fromQuery(DB::raw('SELECT * FROM `grants`;'), []);
-
+        $spectrometers = Spectrometer::all();
+        $solvents = Solvent::all();
+        $grants = Grant::all();
 
         return view('samples.new')
             ->with('spectrometers', $spectrometers)
@@ -92,50 +64,21 @@ class SampleController extends Controller
             ->with('grants', $grants);
     }
 
-    public function store(Request $request)
+    public
+    function store(Request $request)
     {
         $validated = $request->validate($this->rules());
 
-        /**
-         * Sh*t here we go again (without ORM)
-         */
-
         $user = Auth::user();
-//        $sample = new Sample($validated);
-//       $sample->solvent()->associate(Solvent::find($request->solvent));
-//       $sample->spectrometer()->associate(Spectrometer::find($request->spectrometer));
-//       $sample->grant()->associate(Grant::find($request->grant));
-//       $user->samples()->save($sample);
+        $sample = new Sample($validated);
+        $sample->solvent()->associate(Solvent::find($request->solvent));
+        $sample->spectrometer()->associate(Spectrometer::find($request->spectrometer));
 
-        $spectrometer = DB::select("SELECT id FROM `spectrometers` WHERE id = :id", ['id' => $request->spectrometer])[0];
-        $solvent = DB::select("SELECT id FROM `solvents` WHERE id = :id", ['id' => $request->solvent])[0];
-        $grant = NULL;
         if ($request->grant) {
-            $grant = DB::select("SELECT id FROM `grants` WHERE id = :id", ['id' => $request->grant])[0];
+            $sample->grant()->associate(Grant::find($request->grant));
         }
 
-        $res = DB::insert('
-        INSERT INTO samples
-        (`name`, `amount`, `structure`, `note`, `solvent_id`, `spectrometer_id`, `grant_id`, `user_id`, `updated_at`, `created_at`)
-         values
-        (:name, :amount, :structure, :note, :solvent_id, :spectrometer_id, :grant_id, :user_id, :updated_at, :created_at)
-        ', [
-            'name' => $request->name,
-            'amount' => $request->amount,
-            'structure' => $request->structure,
-            'note' => $request->note,
-            'solvent_id' => $solvent->id,
-            'spectrometer_id' => $spectrometer->id,
-            'grant_id' => $grant ? $grant->id : NULL,
-            'user_id' => $user->id,
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
-        ]);
-
-        /**
-         * Oh boi dis was so much pain
-         * git reset --hard HEAD^
-         */
+        $res = $user->samples()->save($sample);
 
         if ($res) {
             session()->put(['success' => ['Vzorka bola vytvorená.']]);
@@ -149,30 +92,7 @@ class SampleController extends Controller
 
     public function show(Request $request)
     {
-//        $sample = Sample::findOrFail($request['id']);
-
-        // Ew.
-        $sample = DB::select("
-                SELECT
-                s.id,s.user_id,u.login as user_login,
-                s.name,s.amount,s.structure,s.note,s.created_at, s.updated_at,
-                sp.name as spectrometer_name , sp.type as spectrometer_type,
-                so.name as solvent_name,
-                g.name as grant_name,
-                s.analysis_id as analysis_id,
-                st.name as analysis_status,
-                u2.login as analysis_laborant_login
-                from samples s
-                LEFT JOIN spectrometers sp ON sp.id = s.spectrometer_id
-                LEFT JOIN solvents so ON so.id = s.solvent_id
-                LEFT JOIN grants g ON g.id = s.grant_id
-                LEFT JOIN analyses a ON a.id = s.analysis_id
-                LEFT JOIN users u ON u.id = s.user_id
-                LEFT JOIN users u2 ON u2.id = a.user_id
-                LEFT JOIN statuses st ON st.id = a.status_id
-                WHERE s.id = :id",
-            ['id' => $request['id']]
-        )[0];
+        $sample = Sample::findOrFail($request['id']);
 
         return view('samples.detail')
             ->with('sample', $sample);

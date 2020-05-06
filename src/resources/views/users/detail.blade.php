@@ -17,7 +17,7 @@
                 center
             >
                 <p>
-                    {{ $user->role_name }}
+                    {{ $user->role->name }}
                 </p>
             </x-ui.label>
 
@@ -25,12 +25,15 @@
                 key="počet vzoriek"
                 center
             >
-                <p>
-                    {{ $user->samples }}
-                </p>
+                <a
+                    href="/samples??search={{$user->login}}"
+                    class="text-blue-600 hover:underline"
+                >
+                    {{ $samples }}
+                </a>
             </x-ui.label>
 
-            @if($user->role_name == 'laborant')
+            @if($user->hasRole('laborant'))
 
                 <div class="mt-8 mb-5">
                     <p
@@ -44,9 +47,13 @@
                     key="analyzované vzorky"
                     center
                 >
-                    <p>
-                        {{ $user->analyses }}
-                    </p>
+
+                    <a
+                        href="/analyses??search={{$user->login}}"
+                        class="text-blue-600 hover:underline"
+                    >
+                        {{ $analyses ?: 0 }}
+                    </a>
                 </x-ui.label>
 
                 <x-ui.label
@@ -54,8 +61,8 @@
                     center
                 >
                     <p>
-                        @if($user->avg_timestamp > 0)
-                            {{ \Carbon\CarbonInterval::seconds($user->avg_timestamp)->cascade()->forHumans() }}
+                        @if(isset($avg_timestamp) && $avg_timestamp > 0)
+                            {{ $avg_timestamp }}
                         @else
                             -
                         @endif

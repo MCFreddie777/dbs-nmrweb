@@ -10,6 +10,7 @@ use App\Sample;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 
 class AnalysesController extends Controller
 {
@@ -29,13 +30,21 @@ class AnalysesController extends Controller
             ->select('samples.name as sample', 'analyses.*', 'statuses.id as status_id', 'statuses.name as status')
             ->search($search)
             ->orderBy($pagination->sort->real_key, $pagination->sort->direction)
-            ->take($pagination->limit)->skip($pagination->offset)
-            ->get();
+            ->take($pagination->limit)->skip($pagination->offset);
 
         $rows = Analysis::joinSamplesTable()
             ->select(DB::raw("count(1) as count"))
-            ->search($search)
-            ->first();
+            ->search($search);
+
+        // Only admin is allowed to see all records
+        if (Gate::allows('user')) {
+            $analyses->onlyMine(Auth::id());
+            $rows->onlyMine(Auth::id());
+        }
+
+        // fetch from DB
+        $analyses = $analyses->get();
+        $rows = $rows->first();
 
         $pagination->setTotalPages($rows->count);
         CustomPaginator::validate($pagination);
@@ -48,6 +57,13 @@ class AnalysesController extends Controller
     public function show($id)
     {
         $analysis = Analysis::findOrFail($id);
+
+        if (
+            !Gate::allows('admin') &&
+            !Gate::allows('laborant') &&
+            $analysis->sample->user->id != Auth::id()
+        )
+            abort(404);
 
         return view('analyses.detail')
             ->with('analysis', $analysis);

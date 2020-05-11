@@ -31,6 +31,11 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('analyses')->group(function () {
         Route::get('/', 'AnalysesController@index');
+        Route::get('/{id}', 'AnalysesController@show');
+        Route::middleware('role:laborant,admin')->group(function () {
+            Route::get('/new', 'AnalysesController@create');
+            Route::post('/', 'AnalysesController@store');
+        });
     });
 
     Route::middleware('role:garant,admin')->group(function () {

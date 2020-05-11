@@ -34,7 +34,7 @@ class Sample extends Model
         return $this->belongsTo('App\Analysis');
     }
 
-    public function scopeJoinSamplesTable($query)
+    public function scopeJoinUsersTable($query)
     {
         return $query
             ->leftjoin('users', 'users.id', '=', 'samples.user_id');

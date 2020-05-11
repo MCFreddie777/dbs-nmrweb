@@ -129,17 +129,31 @@
                             class="text-blue-600 hover:underline"
                             href="{{ url('/analyses',$sample->analysis->id) }}"
                         >
-                            {{ ucfirst($sample->analysis->status()->name) }} ({{ $sample->analysis->user->login }})
+                            {{ ucfirst($sample->analysis->status()->name) }} ({{ $sample->analysis->laborant->login }})
                         </a>
                     @else
                         <p>
-                            {{ ucfirst($sample->analysis->status()->name) }} ({{ $sample->analysis->user->login }})
+                            {{ ucfirst($sample->analysis->status()->name) }} ({{ $sample->analysis->laborant->login }})
                         </p>
                     @endif
                 @else
                     <p class="text-gray-500">Nepriradené</p>
                 @endisset
             </x-ui.label>
+
+            @can('laborant')
+                @csrf
+                <input type="hidden" name="sample_id" value="{{ $sample->id }}">
+                <div class="flex flex-row justify-end mt-5">
+                    <x-ui.button
+                        class="rounded-full"
+                        text="Analyzovať"
+                        primary
+                        type="link"
+                        :href="url('/analyses/new').'?sample='.$sample->id"
+                    ></x-ui.button>
+                </div>
+            @endcan
         </div>
     </div>
 @stop

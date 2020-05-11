@@ -42,6 +42,7 @@ class Sample extends Model
 
     public function scopeSearch($query, $search)
     {
+        if (!$search) return $query;
         return $query
             ->distinct()
             ->where('users.login', 'like', '%' . $search . '%')

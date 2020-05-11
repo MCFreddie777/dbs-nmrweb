@@ -11,6 +11,7 @@ class Lab extends Model
 
     public function scopeSearch($query, $search)
     {
+        if (!$search) return $query;
         return $query
             ->distinct()
             ->where('name', 'like', '%' . $search . '%')

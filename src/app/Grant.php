@@ -33,6 +33,7 @@ class Grant extends Model
 
     public function scopeSearch($query, $search)
     {
+        if (!$search) return $query;
         return $query
             ->distinct()
             ->where('grants.name', 'like', '%' . $search . '%');

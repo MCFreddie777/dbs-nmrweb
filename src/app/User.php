@@ -65,6 +65,7 @@ class User extends Authenticatable
 
     public function scopeSearch($query, $search)
     {
+        if (!$search) return $query;
         return $query
             ->distinct()
             ->where('users.login', 'like', '%' . $search . '%')

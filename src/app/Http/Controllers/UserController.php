@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Analysis;
 use App\Helpers\CustomPaginator;
 use App\Helpers\CustomSearch;
+use App\Lab;
+use App\Role;
 use App\User;
 use Carbon\CarbonInterval;
 use Illuminate\Http\Request;
@@ -68,5 +70,50 @@ class UserController extends Controller
             ->with('samples', $samples)
             ->with('analyses', $analyses)
             ->with('avg_timestamp', CarbonInterval::seconds($avg_timestamp)->cascade()->forHumans());
+    }
+
+    public function create()
+    {
+        $roles = Role::all();
+
+        return view('users.new')
+            ->with('roles', $roles);
+    }
+
+    public function store(Request $request)
+    {
+        $validated = $request->validate($this->rules(), $this->messages());
+        $user = User::create($validated);
+
+        if ($user->id) {
+            session()->put(['success' => ['Účet používateľa bol úspešne vytvorený.']]);
+            return redirect('/users');
+        } else {
+            return redirect()->back()
+                ->withInput()
+                ->withErrors(['Nepodarilo sa vytvoriť používateľa']);
+        }
+    }
+
+    public function rules()
+    {
+        return [
+            'login' => 'required|unique:App\User,login',
+            'role_id' => 'required|exists:App\Role,id',
+            'password' => 'required|confirmed|min:8',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'login.required' => 'Nebol zadaný login používateľa',
+            'login.unique' => 'Užívateľ s daným loginom už existuje',
+            'role_id.required' => 'Nebola vybratá rola',
+            'role_id.exists' => 'Špecifikovaná rola neexistuje',
+            'password.required' => 'Nebolo zadané heslo',
+            'password.confirmed' => 'Heslá sa nezhodujú',
+            'password.min' => 'Príliš krátke heslo',
+        ];
     }
 }

@@ -44,6 +44,8 @@ Route::middleware('auth')->group(function () {
 
         Route::prefix('users')->group(function () {
             Route::get('/', 'UserController@index');
+            Route::post('/', 'UserController@store');
+            Route::get('/new', 'UserController@create');
             Route::get('/{id}', 'UserController@show');
         });
 

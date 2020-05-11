@@ -72,6 +72,8 @@
                     class="rounded-full"
                     text="Nový užívateľ"
                     primary
+                    type="link"
+                    :href="url()->current().'/new'"
                 >
                 </x-ui.button>
             </div>

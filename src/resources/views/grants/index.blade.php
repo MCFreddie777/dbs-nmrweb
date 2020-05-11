@@ -22,7 +22,7 @@
     $options=[
         'data' =>  [
             'items'=> $grants,
-            'empty'=> 'Ľutujeme, nemáte žiadne granty',
+            'empty'=> 'Ľutujeme, nenašli sa žiadne granty',
             'onclick'=> '/grants'
         ],
         'header'=> [

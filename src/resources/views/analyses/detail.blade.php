@@ -28,9 +28,11 @@
                         style="position:absolute; left:-1em;"
                     ></x-ui.status-icon>
                     {{$analysis->status()->name}}
+                    @can('user')
+                        ({{$analysis->laborant->login}})
+                    @endcan
                 </div>
             </x-ui.label>
-
 
             <x-ui.label
                 key="laboratórium"

@@ -17,9 +17,9 @@ class Analysis extends Model
         return $this->hasOne('App\Sample');
     }
 
-    public function user()
+    public function laborant()
     {
-        return $this->belongsTo('App\User');
+        return $this->belongsTo('App\User', 'user_id');
     }
 
     public function status()
@@ -45,5 +45,11 @@ class Analysis extends Model
         return $query
             ->distinct()
             ->where('samples.name', 'like', '%' . $search . '%');
+    }
+
+    public function scopeOnlyMine($query, $id)
+    {
+        return $query
+            ->where('samples.user_id', $id);
     }
 }

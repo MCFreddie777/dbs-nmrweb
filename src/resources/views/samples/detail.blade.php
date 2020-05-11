@@ -129,11 +129,11 @@
                             class="text-blue-600 hover:underline"
                             href="{{ url('/analyses',$sample->analysis->id) }}"
                         >
-                            {{ ucfirst($sample->analysis->status()->name) }} ({{ $sample->analysis->user->login }})
+                            {{ ucfirst($sample->analysis->status()->name) }} ({{ $sample->analysis->laborant->login }})
                         </a>
                     @else
                         <p>
-                            {{ ucfirst($sample->analysis->status()->name) }} ({{ $sample->analysis->user->login }})
+                            {{ ucfirst($sample->analysis->status()->name) }} ({{ $sample->analysis->laborant->login }})
                         </p>
                     @endif
                 @else

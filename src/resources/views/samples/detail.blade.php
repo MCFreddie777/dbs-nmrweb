@@ -140,6 +140,20 @@
                     <p class="text-gray-500">Nepriradené</p>
                 @endisset
             </x-ui.label>
+
+            @can('laborant')
+                @csrf
+                <input type="hidden" name="sample_id" value="{{ $sample->id }}">
+                <div class="flex flex-row justify-end mt-5">
+                    <x-ui.button
+                        class="rounded-full"
+                        text="Analyzovať"
+                        primary
+                        type="link"
+                        :href="url('/analyses/new').'?sample='.$sample->id"
+                    ></x-ui.button>
+                </div>
+            @endcan
         </div>
     </div>
 @stop

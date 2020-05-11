@@ -9,6 +9,11 @@ class Lab extends Model
     public $timestamps = false;
     protected $fillable = ['address', 'name'];
 
+    public function analyses()
+    {
+        return $this->hasMany('App\Analysis');
+    }
+
     public function scopeSearch($query, $search)
     {
         if (!$search) return $query;

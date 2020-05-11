@@ -9,7 +9,7 @@ class Analysis extends Model
 {
     public function lab()
     {
-        return $this->hasOne('App\Lab');
+        return $this->belongsTo('App\Lab');
     }
 
     public function user()

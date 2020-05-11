@@ -30,14 +30,14 @@ class SampleController extends Controller
         $search = $request->get('search') ?? '';
         $pagination = CustomPaginator::makePaginationObject($request, 10);
 
-        $samples = Sample::joinSamplesTable()
+        $samples = Sample::joinUsersTable()
             ->select('users.login', 'samples.*')
             ->search($search)
             ->orderBy($pagination->sort->real_key, $pagination->sort->direction)
             ->take($pagination->limit)->skip($pagination->offset);
 
         // total number of records (pagination e.g. [1 of 10])
-        $rows = Sample::joinSamplesTable()
+        $rows = Sample::joinUsersTable()
             ->select(DB::raw("count(1) as count"))
             ->search($search);
 

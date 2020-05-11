@@ -3,16 +3,46 @@
 namespace App\Http\Controllers;
 
 use App\Analysis;
+use App\Helpers\CustomPaginator;
+use App\Helpers\CustomSearch;
 use App\Lab;
 use App\Sample;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class AnalysesController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        return view('analyses.index');
+        if (
+            !CustomPaginator::validateRequest($request, ['id', 'sample', 'status']) ||
+            !CustomSearch::validateRequest($request)
+        )
+            return redirect()->back();
+
+        $search = $request->get('search') ?? '';
+        $pagination = CustomPaginator::makePaginationObject($request, 10);
+
+        $analyses = Analysis::joinSamplesTable()
+            ->joinStatusesTable()
+            ->select('samples.name as sample', 'analyses.*', 'statuses.id as status_id', 'statuses.name as status')
+            ->search($search)
+            ->orderBy($pagination->sort->real_key, $pagination->sort->direction)
+            ->take($pagination->limit)->skip($pagination->offset)
+            ->get();
+
+        $rows = Analysis::joinSamplesTable()
+            ->select(DB::raw("count(1) as count"))
+            ->search($search)
+            ->first();
+
+        $pagination->setTotalPages($rows->count);
+        CustomPaginator::validate($pagination);
+
+        return view('analyses.index')
+            ->with('analyses', $analyses)
+            ->with('pagination', $pagination);
     }
 
     public function create(Request $request)

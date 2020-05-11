@@ -45,6 +45,14 @@ class AnalysesController extends Controller
             ->with('pagination', $pagination);
     }
 
+    public function show($id)
+    {
+        $analysis = Analysis::findOrFail($id);
+
+        return view('analyses.detail')
+            ->with('analysis', $analysis);
+    }
+
     public function create(Request $request)
     {
         if (!$request->get('sample')) abort(404);

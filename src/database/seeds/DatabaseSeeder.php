@@ -13,13 +13,19 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        // Create fixed statuses
+        foreach (array('hotovo', 'rozpracované', 'v poradí') as $status) {
+            DB::table('statuses')->insert([
+                'name' => $status,
+            ]);
+        };
+
         $this->call([
             UsersTableSeeder::class,
             GrantsTableSeeder::class,
             SolventsTableSeeder::class,
             SpectrometersTableSeeder::class,
             LabsTableSeeder::class,
-            AnalysesTableSeeder::class,
             SamplesTableSeeder::class,
         ]);
     }

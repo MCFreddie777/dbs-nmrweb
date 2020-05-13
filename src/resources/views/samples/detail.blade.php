@@ -142,17 +142,18 @@
             </x-ui.label>
 
             @can('laborant')
-                @csrf
-                <input type="hidden" name="sample_id" value="{{ $sample->id }}">
-                <div class="flex flex-row justify-end mt-5">
-                    <x-ui.button
-                        class="rounded-full"
-                        text="Analyzovať"
-                        primary
-                        type="link"
-                        :href="url('/analyses/new').'?sample='.$sample->id"
-                    ></x-ui.button>
-                </div>
+                @empty($sample->analysis)
+                    <div class="flex flex-row justify-end mt-5">
+                        <x-ui.button
+                            class="rounded-full"
+                            text="Analyzovať"
+                            primary
+                            type="link"
+                            type="link"
+                            :href="url('/analyses/new').'?sample='.$sample->id"
+                        ></x-ui.button>
+                    </div>
+                @endempty
             @endcan
 
             @can('admin')

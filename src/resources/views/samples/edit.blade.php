@@ -105,7 +105,7 @@
                     <x-ui.select
                         name="grant"
                         :items="$grants"
-                        :selected="$sample->grant->id"
+                        :selected="$sample->grant->id ?? NULL"
                         class="text-gray-700 w-1/4"
                     ></x-ui.select>
                 </x-ui.label>

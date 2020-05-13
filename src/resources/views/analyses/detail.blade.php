@@ -1,6 +1,6 @@
 @extends('master')
 
-@section('title','Analýza vzorky'.$analysis->sample->name)
+@section('title','Analýza vzorky '.$analysis->sample->name)
 
 @section('content')
     <div class="bg-white rounded-lg">

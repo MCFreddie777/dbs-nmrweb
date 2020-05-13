@@ -30,7 +30,7 @@ class UserController extends Controller
             ->select('users.*', 'roles.name as role', DB::raw("count(1) as samples"))
             ->orderBy($pagination->sort->real_key, $pagination->sort->direction)
             ->search($search)
-            ->groupBy('users.id')
+            ->groupBy('users.id','roles.name')
             ->take($pagination->limit)->skip($pagination->offset)
             ->get();
 

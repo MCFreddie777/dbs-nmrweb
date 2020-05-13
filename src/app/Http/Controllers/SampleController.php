@@ -110,12 +110,24 @@ class SampleController extends Controller
             ->withErrors(['Nepodarilo sa vytvoriť vzorku']);
     }
 
-    public function show(Request $request)
+    public function show($id)
     {
-        $sample = Sample::findOrFail($request['id']);
-
+        $sample = Sample::findOrFail($id);
         return view('samples.detail')
             ->with('sample', $sample);
+    }
+
+    public function destroy($id)
+    {
+        $sample = Sample::findOrFail($id);
+        $result = $sample->delete();
+
+        if ($result) {
+            session()->put(['success' => ['Vzorka bola úspešne vymazaná.']]);
+            return redirect('/');
+        }
+        return redirect()->back()
+            ->withErrors(['Nepodarilo sa vymazať vzorku']);
     }
 
     public function rules()

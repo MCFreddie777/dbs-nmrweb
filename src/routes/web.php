@@ -27,6 +27,9 @@ Route::middleware('auth')->group(function () {
         Route::get('/new', 'SampleController@create');
         Route::post('/', 'SampleController@store');
         Route::get('/{id}', 'SampleController@show');
+        Route::middleware('role:admin')->group(function () {
+            Route::delete('/{id}', 'SampleController@destroy');
+        });
     });
 
     Route::prefix('analyses')->group(function () {

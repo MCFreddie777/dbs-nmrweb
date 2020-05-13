@@ -28,6 +28,8 @@ Route::middleware('auth')->group(function () {
         Route::post('/', 'SampleController@store');
         Route::get('/{id}', 'SampleController@show');
         Route::middleware('role:admin')->group(function () {
+            Route::get('/{id}/edit', 'SampleController@edit');
+            Route::put('/{id}', 'SampleController@update');
             Route::delete('/{id}', 'SampleController@destroy');
         });
     });

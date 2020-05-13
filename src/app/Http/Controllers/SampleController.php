@@ -8,8 +8,6 @@ use App\Helpers\CustomSearch;
 use App\Sample;
 use App\Solvent;
 use App\Spectrometer;
-use App\User;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -117,7 +115,62 @@ class SampleController extends Controller
             ->with('sample', $sample);
     }
 
-    public function destroy($id)
+    public function edit($id)
+    {
+        $spectrometers = Spectrometer::all();
+        $solvents = Solvent::all();
+        $grants = Grant::all();
+
+        $sample = Sample::findOrFail($id);
+
+        return view('samples.edit')
+            ->with('sample', $sample)
+            ->with('spectrometers', $spectrometers)
+            ->with('solvents', $solvents)
+            ->with('grants', $grants);
+    }
+
+    public function update(Request $request)
+    {
+        $request->validate($this->rules());
+        $sample = Sample::findOrFail($request['id']);
+
+        if ($request->solvent) {
+            $sample->solvent()->associate(Solvent::find($request->solvent));
+        } else {
+            $sample->solvent()->disassociate();
+        }
+
+        if ($request->spectrometer) {
+            $sample->spectrometer()->associate(Spectrometer::find($request->spectrometer));
+        } else {
+            $sample->spectrometer()->disassociate();
+        }
+
+        if ($request->grant) {
+            $sample->grant()->associate(Grant::find($request->grant));
+        } else {
+            $sample->grant->dissociate();
+        }
+
+        $res = $sample->update([
+            'amount' => $request->get('amount'),
+            'structure' => $request->get('structure'),
+            'note' => $request->get('note'),
+        ]);
+
+        if ($res) {
+            session()->put(['success' => ['Vzorka bola uložená.']]);
+            return redirect('/');
+        }
+
+        return redirect()->back()
+            ->withInput()
+            ->withErrors(['Nepodarilo sa upraviť vzorku']);
+    }
+
+    public
+    function destroy($id)
     {
         $sample = Sample::findOrFail($id);
         $result = $sample->delete();
@@ -130,7 +183,8 @@ class SampleController extends Controller
             ->withErrors(['Nepodarilo sa vymazať vzorku']);
     }
 
-    public function rules()
+    public
+    function rules()
     {
         return [
             'name' => 'required|string',

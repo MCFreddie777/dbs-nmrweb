@@ -166,6 +166,13 @@
                             danger
                             type="submit"
                         ></x-ui.button>
+                        <x-ui.button
+                            class="rounded-full ml-3"
+                            text="Upraviť vzorku"
+                            primary
+                            type="link"
+                            :href="url()->current().'/edit'"
+                        ></x-ui.button>
                     </div>
                 </form>
             @endcan

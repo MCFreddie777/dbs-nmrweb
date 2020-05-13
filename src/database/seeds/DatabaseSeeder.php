@@ -26,6 +26,7 @@ class DatabaseSeeder extends Seeder
             SolventsTableSeeder::class,
             SpectrometersTableSeeder::class,
             LabsTableSeeder::class,
+            AnalysesTableSeeder::class,
             SamplesTableSeeder::class,
         ]);
     }

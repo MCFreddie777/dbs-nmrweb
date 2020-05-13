@@ -43,7 +43,7 @@ K administrácií chemických vzoriek používame [knižnicu JSME](https://peter
 __Požiadavky__:
 - PHP 7+
 - Node.js & NPM - Na build frontend častí (transpilácia SASS do CSS)
-- MySQL 5.7
+- PostgreSQL
 - Composer - PHP dependency manager
 
 ```bash
@@ -53,7 +53,7 @@ composer install
 npm install
 ```
 
-Po nahodení databázy a importovaní dát dostupných v `db/db_dump.sql` spustiť server pomocou:
+Po nahodení databázy a importovaní dát dostupných v `db/db_dump.bak` spustiť server pomocou:
 
 ```bash
 php artisan serve

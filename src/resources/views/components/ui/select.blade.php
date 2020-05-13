@@ -1,4 +1,4 @@
-@props(['name','items','class'])
+@props(['name','items','class','selected'])
 
 
 <div class="bg-gray-300 rounded flex flex-row items-center relative
@@ -15,6 +15,7 @@
             <option
                 value="{{$item->id}}"
                 @if(old($name) == $item->id) selected @endif
+                @if(isset($selected) && !old($name) && $selected == $item->id) selected @endif
             >
                 {{  $item->name }}
             </option>

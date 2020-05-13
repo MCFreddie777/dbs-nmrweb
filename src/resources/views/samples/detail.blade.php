@@ -154,6 +154,28 @@
                     ></x-ui.button>
                 </div>
             @endcan
+
+            @can('admin')
+                <form action="" method="POST">
+                    @method('delete')
+                    @csrf
+                    <div class="flex flex-row justify-end mt-5">
+                        <x-ui.button
+                            class="rounded-full"
+                            text="Vymazať vzorku"
+                            danger
+                            type="submit"
+                        ></x-ui.button>
+                        <x-ui.button
+                            class="rounded-full ml-3"
+                            text="Upraviť vzorku"
+                            primary
+                            type="link"
+                            :href="url()->current().'/edit'"
+                        ></x-ui.button>
+                    </div>
+                </form>
+            @endcan
         </div>
     </div>
 @stop

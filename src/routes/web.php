@@ -27,6 +27,11 @@ Route::middleware('auth')->group(function () {
         Route::get('/new', 'SampleController@create');
         Route::post('/', 'SampleController@store');
         Route::get('/{id}', 'SampleController@show');
+        Route::middleware('role:admin')->group(function () {
+            Route::get('/{id}/edit', 'SampleController@edit');
+            Route::put('/{id}', 'SampleController@update');
+            Route::delete('/{id}', 'SampleController@destroy');
+        });
     });
 
     Route::prefix('analyses')->group(function () {

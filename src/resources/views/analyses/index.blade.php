@@ -37,6 +37,14 @@
                     'name'=> 'stav',
                     'key'=>'status',
                 ],
+                [
+                    'name'=> 'laborant',
+                    'key'=>'laborant',
+                ],
+                 [
+                    'name'=> 'priemerný čas analytika pre analýzu',
+                    'key'=>'avg_time',
+                ],
             ],
         ],
         'layout'=> [
@@ -103,6 +111,18 @@
                     :status="$item->status_id"
                 ></x-ui.status-icon>
                 {{ $item->status }}
+            </td>
+
+            <td
+                class="{{ tableRowsClassObject($options,3)}}"
+            >
+                {{ $item->laborant }}
+            </td>
+
+            <td
+                class="{{ tableRowsClassObject($options,4)}}"
+            >
+                {{ \Carbon\CarbonInterval::seconds(round($item->avg_time))->cascade()->forHumans(['parts'=>3]) }}
             </td>
 
             @endscopedslot

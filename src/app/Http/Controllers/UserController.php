@@ -57,9 +57,8 @@ class UserController extends Controller
         if ($user->hasRole('laborant')) {
             $analyses = $user->analyses->count();
             if ($analyses) {
-                $avg_timestamp = Analysis::selectRaw('ROUND(AVG(TIMESTAMPDIFF(SECOND,created_at,updated_at))) AS timestamp')
+                $avg_timestamp = Analysis::selectRaw('ROUND(AVG(EXTRACT(EPOCH FROM updated_at - created_at))) AS timestamp')
                     ->whereUserId($user->id)
-                    ->groupBy('user_id')
                     ->first()
                     ->timestamp;
             }

@@ -32,7 +32,7 @@ class User extends Authenticatable
 
     public function analyses()
     {
-        return $this->hasMany('App\Sample');
+        return $this->hasMany('App\Analysis');
     }
 
     public function grants()

@@ -7,6 +7,7 @@ use App\Helpers\CustomPaginator;
 use App\Helpers\CustomSearch;
 use App\Lab;
 use App\Sample;
+use Carbon\CarbonInterval;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -17,7 +18,7 @@ class AnalysesController extends Controller
     public function index(Request $request)
     {
         if (
-            !CustomPaginator::validateRequest($request, ['id', 'sample', 'status']) ||
+            !CustomPaginator::validateRequest($request, ['id', 'sample', 'status', 'avg_time', 'laborant']) ||
             !CustomSearch::validateRequest($request)
         )
             return redirect()->back();
@@ -27,12 +28,14 @@ class AnalysesController extends Controller
 
         $analyses = Analysis::joinSamplesTable()
             ->joinStatusesTable()
-            ->select('samples.name as sample', 'analyses.*', 'statuses.id as status_id', 'statuses.name as status')
+            ->joinUsersTable()
+            ->select('samples.name as sample', 'analyses.*', 'statuses.id as status_id', 'statuses.name as status', 'users.login as laborant')
+            ->selectRaw('AVG(ROUND(EXTRACT(EPOCH FROM analyses.updated_at - analyses.created_at))) OVER (PARTITION BY users.login) as avg_time')
             ->search($search)
             ->orderBy($pagination->sort->real_key, $pagination->sort->direction)
             ->take($pagination->limit)->skip($pagination->offset);
 
-        $rows = Analysis::joinSamplesTable()
+        $rows = Analysis::joinSamplesTable()->joinUsersTable()
             ->select(DB::raw("count(1) as count"))
             ->search($search);
 

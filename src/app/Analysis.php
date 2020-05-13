@@ -39,12 +39,19 @@ class Analysis extends Model
             ->leftjoin('statuses', 'statuses.id', '=', 'analyses.status_id');
     }
 
+    public function scopeJoinUsersTable($query)
+    {
+        return $query
+            ->leftjoin('users', 'users.id', '=', 'analyses.user_id');
+    }
+
     public function scopeSearch($query, $search)
     {
         if (!$search) return $query;
         return $query
             ->distinct()
-            ->where('samples.name', 'like', '%' . $search . '%');
+            ->where('samples.name', 'like', '%' . $search . '%')
+            ->orWhere('users.login', 'like', '%' . $search . '%');
     }
 
     public function scopeOnlyMine($query, $id)

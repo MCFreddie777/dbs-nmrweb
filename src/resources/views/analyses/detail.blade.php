@@ -28,9 +28,22 @@
                         style="position:absolute; left:-1em;"
                     ></x-ui.status-icon>
                     {{$analysis->status()->name}}
+                    <span
+                        class="ml-1"
+                    >
+                    &lpar;
                     @can('user')
-                        ({{$analysis->laborant->login}})
-                    @endcan
+                            {{$analysis->laborant->login}}
+                        @else
+                            <a
+                                class="text-blue-600 hover:underline"
+                                href="{{ url('/users?search=') }}{{$analysis->laborant->login}}"
+                            >
+                            {{ $analysis->laborant->login }}
+                      </a>
+                            @endcan
+                            &rpar;
+                    </span>
                 </div>
             </x-ui.label>
 

@@ -451,8 +451,9 @@ WHERE u.id = :id
 
 ### Vytvorenie používateľa
 
-- __Milestone:__  TBA
-- __Issues:__ TBA
+- __Milestone:__  [3. Odovzdanie](https://github.com/FIIT-DBS2020/project-gic_souc/milestone/3)
+- __Issues:__
+   - [#33 Implement creating a new user](https://github.com/FIIT-DBS2020/project-gic_souc/issues/33)
 
 <p>
 Administrátor v sekcií správa užívateľov
@@ -461,28 +462,43 @@ Dôvod prečo toto robíme je, že aplikácia funguje na intranete a je uzavret�
 </p>
 
 </div>
+
+#### Screenshoty
+![User create](img/user_create.png)
+
 <div style="page-break-inside: avoid;">
 
 ### Prezvatie vzorky a rozbor
 
-- __Milestone:__  TBA
-- __Issues:__ TBA
+- __Milestone:__  [3. Odovzdanie](https://github.com/FIIT-DBS2020/project-gic_souc/milestone/3)
+- __Issues:__
+   - [#35 Implement analyses](https://github.com/FIIT-DBS2020/project-gic_souc/issues/35)
 
 <p>
 Laborant prevezme vzorku ktorá ešte nemá laboranta, označí ju ako rozpracovanú - že na nej pracuje.
 Updatne sa čas modifikácie a o tomto stave je obozrejmený aj užívateľ.
 Po dokončení laborant označí vzorku (labák) ako dokončený.<br/>
 
-_Poznámka: Možno zoznam všetkých labákov v viewe laboranta? Not sure._
 </p>
 
 </div>
+
+#### Screenshoty
+![Sample detail laborant](img/sample_detail_laborant.png)
+
+![Analysis new](img/analysis_new.png)
+
+![Analyses list](img/analyses_list.png)
+
+![Analysis detail](img/analysis_detail.png)
+
 <div style="page-break-inside: avoid;">
 
 ### Upravovanie a vymazávanie vzoriek
 
-- __Milestone:__  TBA
-- __Issues:__ TBA
+- __Milestone:__  [3. Odovzdanie](https://github.com/FIIT-DBS2020/project-gic_souc/milestone/3)
+- __Issues:__
+   - [#38 Implement sample management](https://github.com/FIIT-DBS2020/project-gic_souc/issues/38)
 
 <p>
 Táto akcia je dostupná iba administrátorovi (aby sa nestrácali a nemdifikovali vzorky)
@@ -490,3 +506,8 @@ Má možnosť pristúpiť k edit pohľadu vzorky, upraviť ju alebo vymazať.
 </p>
 
 </div>
+
+#### Screenshoty
+![Sample detail admin](img/sample_detail_admin.png)
+
+![Sample edit](img/sample_edit.png)

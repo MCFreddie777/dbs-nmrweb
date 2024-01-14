@@ -2,6 +2,7 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
+use App\Role;
 use App\User;
 use Faker\Generator as Faker;
 
@@ -20,6 +21,6 @@ $factory->define(User::class, function (Faker $faker) {
     return [
         'login' => $faker->unique()->userName,
         'password' => Hash::make($faker->password),
-        'role_id' => $faker->randomElement([2, 3, 4]),
+        'role_id' => Role::whereIn('name', array('laborant', 'garant', 'user'))->pluck('id')->random(),
     ];
 });

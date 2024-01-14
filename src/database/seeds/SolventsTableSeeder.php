@@ -12,8 +12,6 @@ class SolventsTableSeeder extends Seeder
      */
     public function run()
     {
-        for ($i = 1; $i <= env('TABLE_COUNT'); $i++) {
-            factory(Solvent::class)->create();
-        }
+        factory(Solvent::class, 5)->create();
     }
 }

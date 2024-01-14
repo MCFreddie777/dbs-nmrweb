@@ -30,7 +30,7 @@ class UsersTableSeeder extends Seeder
         /**
          * Computing and saving the ultimate and unbreakable password
          */
-        $password = Hash::make('nbusr123');
+        $password = Hash::make('Nbusr123');
 
         foreach ($roles as $key => $role) {
             $user = new User();
@@ -40,8 +40,7 @@ class UsersTableSeeder extends Seeder
             $user->save();
         }
 
-        for ($i = 1; $i <= env('TABLE_COUNT') - 4; $i++) {
-            factory(User::class)->create(['password' => $password]);
-        }
+        // Generate other users
+        factory(User::class, 20)->create(['password' => $password]);
     }
 }

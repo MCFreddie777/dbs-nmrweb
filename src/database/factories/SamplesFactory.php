@@ -7,13 +7,15 @@ use App\Grant;
 use App\Sample;
 use App\Solvent;
 use App\Spectrometer;
+use App\User;
 use Faker\Generator as Faker;
 
 $factory->define(Sample::class, function (Faker $faker) {
-    global $sampleMolStructure;
     return [
         'name' => $faker->sentence($nbWords = 3, $variableNbWords = true),
-        'amount' => $faker->numberBetween(0, 500),
+        'user_id' => User::whereHas('role', function ($q) {
+            $q->where('name', 'user');
+        })->pluck('id')->random(),
 
         // MolFile structure for JSME Applet
         'structure' => "C/2=F/C=P\C([C+]1#[O+2][Br+]NCOO1)=C2
@@ -52,44 +54,26 @@ M  CHG  1   8   2
 M  CHG  1   9   1
 M  END
 ",
+
+        'amount' => $faker->numberBetween(0, 500),
         'note' => $faker->sentence,
-
         'analysis_id' => function () {
-            $ids = Analysis::all()->pluck('id');
-
             // Might or might not be analysed
-            if (rand(0, 1) && $ids->count() < env('TABLE_COUNT'))
-                return factory(Analysis::class)->create()->id;
-            else
+            if (rand(0, 1)) {
+                return $this->faker->unique()->randomElement(Analysis::all()->pluck('id'));
+            } else {
                 return NULL;
+            }
         },
-
-        'spectrometer_id' => function () {
-            $ids = Spectrometer::all()->pluck('id');
-
-            if ($ids->count() < env('TABLE_COUNT'))
-                return factory(Spectrometer::class)->create()->id;
-            else
-                return $ids->random();
-        },
-
-        'solvent_id' => function () {
-            $ids = Solvent::all()->pluck('id');
-
-            if ($ids->count() < env('TABLE_COUNT'))
-                return factory(Solvent::class)->create()->id;
-            else
-                return $ids->random();
-        },
-
+        'spectrometer_id' => Spectrometer::all()->pluck('id')->random(),
+        'solvent_id' => Solvent::all()->pluck('id')->random(),
         'grant_id' => function () {
-            $ids = Grant::all()->pluck('id');
-
-            if ($ids->count() < env('TABLE_COUNT'))
-                return factory(Grant::class)->create()->id;
-            else if (rand(0, 1))
-                return $ids->random();
-            return NULL;
+            // Not all samples need to belong to grant
+            if (rand(0, 1)) {
+                return Grant::all()->pluck('id')->random();
+            } else {
+                return NULL;
+            }
         },
     ];
 });

@@ -12,8 +12,6 @@ class LabsTableSeeder extends Seeder
      */
     public function run()
     {
-        for ($i = 1; $i <= env('TABLE_COUNT'); $i++) {
-            factory(Lab::class)->create();
-        }
+        factory(Lab::class, 10)->create();
     }
 }

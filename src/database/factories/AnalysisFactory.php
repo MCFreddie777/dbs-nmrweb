@@ -4,24 +4,18 @@
 
 use App\Analysis;
 use App\Lab;
-use App\Model;
 use App\User;
 use Faker\Generator as Faker;
+use Carbon\Carbon;
 
 $factory->define(Analysis::class, function (Faker $faker) {
 
     return [
-        'user_id' => function () {
-            return User::where('role_id', 2)->pluck('id')->random();
-        },
-        'lab_id' => function () {
-            $ids = Lab::all()->pluck('id');
-
-            if ($ids->count() < env('TABLE_COUNT'))
-                return factory(Lab::class, 2)->create()[0]->id;
-            else
-                return $ids->random();
-        },
-        'status_id' => DB::table('statuses')->get()->pluck('id')->random()
+        'user_id' => User::whereHas('role', function ($q) {
+            $q->where('name', 'laborant');
+        })->pluck('id')->random(),
+        'lab_id' => Lab::all()->pluck('id')->random(),
+        'status_id' => DB::table('statuses')->get()->pluck('id')->random(),
+        'updated_at' => Carbon::now()->addRealHours(rand(0, 72))->addRealMinutes(rand(0, 60))
     ];
 });

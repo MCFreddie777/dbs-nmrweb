@@ -13,10 +13,14 @@ class GrantsTableSeeder extends Seeder
      */
     public function run()
     {
-        $users = User::where('role_id', 3)->get();
+        $garants = User::whereHas('role', function($q){
+            $q->where('name', 'garant');
+        })->get();
 
-        foreach ($users as $user) {
-            $user->grants()->save(factory(Grant::class)->make());
+        foreach ($garants as $garant) {
+            if (rand(0, 1)) {
+                $garant->grants()->save(factory(Grant::class)->make());
+            }
         }
     }
 }

@@ -12,8 +12,6 @@ class SpectrometersTableSeeder extends Seeder
      */
     public function run()
     {
-        for ($i = 1; $i <= env('TABLE_COUNT'); $i++) {
-            factory(Spectrometer::class)->create();
-        }
+        factory(Spectrometer::class, 3)->create();
     }
 }

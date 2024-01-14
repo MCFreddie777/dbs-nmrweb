@@ -19,7 +19,7 @@ Náš systém zjednodušuje prácu ako laborantovi, tak i zákazníkovi.
 Zákazník má možnosť sa do systému prihlásiť (registrácia je uzatvorená administrátorom), vytvoriť novú vzorku, vidieť zoznam svojich odovzdaných vzoriek, ako aj ich stav (či boli analyzované alebo nie).
 Laborant ľahko vyhľadá detaily a informácie o vzorke podľa čísla na skúmavke, ktoré je vygenerované po vytvorení vzorky zákazníkom.
 
-Celá špecifikácia je dostupná na [Wiki projektu](https://github.com/FIIT-DBS2020/project-gic_souc/wiki)
+Celá špecifikácia je dostupná v [dokumentácií](doc/README.md)
 </p>
 
 <div style="page-break-after: always;"></div>
@@ -41,25 +41,58 @@ K administrácií chemických vzoriek používame [knižnicu JSME](https://peter
 
 ## Inštalácia
 __Požiadavky__:
-- PHP 7+
-- Node.js & NPM - Na build frontend častí (transpilácia SASS do CSS)
-- PostgreSQL
-- Composer - PHP dependency manager
+- [Docker](https://www.docker.com/get-started/)
 
-```bash
-git clone https://github.com/FIIT-DBS2020/project-gic_souc/
-cd project-gic_souc/src
-composer install
-npm install
+
+### 1. Vytvorte súbor .env a vyplňte premenné prostredia
+
+- Skopírujte súbor `.env.example` a premenujte na `.env`.
+
+```shell
+cp .env.example .env
 ```
+  
+### 2. Vy-buildite kontajnery
 
-Po nahodení databázy a importovaní dát dostupných v `db/db_dump.bak` spustiť server pomocou:
+  ```shell
+  docker compose up --build -d
+  ```
 
-```bash
-php artisan serve
-```
+### 3. Vygenerujte kľúč secret
 
-_Debug credentials:_<br/>
+  ```shell
+  docker compose run --rm app php artisan key:generate
+  ```
+
+### 4. Spustite migrácie databázy
+
+  ```shell
+  docker compose run --rm app php artisan migrate
+  ```
+
+### 5. Naplňte databázu demo dátami (optional)
+
+  ```shell
+  docker compose run --rm app php artisan db:seed
+  ```
+
+## Spúšťanie
+
+- Na spustenie všetkých služieb použite príkaz:
+
+  ```shell
+  docker compose up -d
+  ```
+
+- Pre vypnutie služieb:
+
+  ```shell
+  docker compose down
+  ```
+
+
+## Debug prístupové údaje
+
 __login:__ {rola}@test.sk<br/>
-__supertajné heslo:__ nbusr123<br/>
+__supertajné heslo:__ Nbusr123<br/>
 _(Miesto role doplňte jedno z nasledujúcich - admin,garant,laborant,user)_

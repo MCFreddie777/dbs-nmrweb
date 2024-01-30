@@ -35,7 +35,8 @@ services:
     volumes:
       - ./:/app
     ports:
-      - 8080:8080
+      - 3000:3000 # Browsersync
+      - 8080:8080 # Webpack dev server
     entrypoint: /entrypoint.sh
     command: npm run dev
 

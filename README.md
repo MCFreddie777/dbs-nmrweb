@@ -61,19 +61,19 @@ cp .env.example .env
 ### 3. Vygenerujte kľúč secret
 
   ```shell
-  docker compose run --rm app php artisan key:generate
+  docker compose exec app php artisan key:generate
   ```
 
 ### 4. Spustite migrácie databázy
 
   ```shell
-  docker compose run --rm app php artisan migrate
+  docker compose exec app php artisan migrate
   ```
 
 ### 5. Naplňte databázu demo dátami (optional)
 
   ```shell
-  docker compose run --rm app php artisan db:seed
+  docker compose exec app php artisan db:seed
   ```
 
 ## Spúšťanie
@@ -83,6 +83,7 @@ cp .env.example .env
   ```shell
   docker compose up -d
   ```
+- Navštívte stránku v prehliadači: -  [http://localhost:3000](http://localhost:3000)
 
 - Pre vypnutie služieb:
 

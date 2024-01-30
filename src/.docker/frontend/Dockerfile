@@ -12,4 +12,4 @@ COPY package*.json ./
 
 ENTRYPOINT ["/entrypoint.sh"]
 
-CMD ["npm","run","watch"]
+CMD ["npm","run","dev"]

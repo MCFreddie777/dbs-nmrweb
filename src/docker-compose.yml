@@ -20,27 +20,31 @@ services:
     volumes:
       - ./.docker/app/init.sh:/home/init.sh
       - ./:/var/www/html
-    command: /bin/bash -c "composer install && php-fpm"
     depends_on:
       - db
-    tty: true
-    stdin_open: true
+    entrypoint: /entrypoint.sh
+    command: php-fpm
 
   frontend:
-    image: node:16
-    working_dir: /var/www/html
+    build:
+      context: .
+      dockerfile: ./.docker/frontend/Dockerfile
+    working_dir: /app
     volumes:
-      - ./:/var/www/html
-    command: /bin/bash -c "npm install && npm run watch-poll"
+      - ./:/app
+    entrypoint: /entrypoint.sh
+    command: npm run watch
 
   db:
     image: postgres:9.6.1
     ports:
-      - "5432:5432"
+      - 5432:5432
     environment:
       POSTGRES_DB: ${DB_DATABASE}
       POSTGRES_USER: ${DB_USERNAME}
       POSTGRES_HOST_AUTH_METHOD: trust
+    volumes:
+      - database-data:/var/lib/postgresql/data
 
 volumes:
   database-data:
